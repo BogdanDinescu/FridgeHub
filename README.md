@@ -1,2 +1,2 @@
 # FridgeHub
-A smart fridge simulator
+A smart and cool fridge simulator
