@@ -5,18 +5,19 @@
                 {
                     "Items" : [
                         {
-                            "Item" : "Lapte Sana",
+                            "Name" : "Lapte Sana",
                             "Quantity" : 3,
                             "Kcal" : 42.3,
                             "Weight" : 1
                         },
                         {
-                            "Item" : "Lapte Zuzu",
+                            "Name" : "Lapte Zuzu",
                             "Quantity" : 2,
                             "Kcal" : 40.9,
                             "Weight" : 1
                         }
-                    ]
+                    ],
+                    "Temperature" : 4.0
                 }
             ]
         },
@@ -25,18 +26,19 @@
                 {
                     "Items" : [
                         {
-                            "Item" : "Mici",
+                            "Name" : "Mici",
                             "Quantity" : 5,
                             "Kcal" : 345,
                             "Weight" : 1
                         },
                         {
-                            "Item" : "Pizza Congelata",
+                            "Name" : "Pizza Congelata",
                             "Quantity" : 2,
                             "Kcal" : 700,
                             "Weight" : 0.3
                         }
-                    ]
+                    ],
+                    "Temperature" : -20.0
                 }
             ]
         }
