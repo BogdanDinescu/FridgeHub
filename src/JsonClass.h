@@ -8,7 +8,9 @@
 class JsonClass {
     public:
         JsonClass();
+        void parseFile(std::string);
         void printJson();
+        Json::Value parseString(std::string);
     private:
         std::string file_path;
         Json::Value jsonInformation;
