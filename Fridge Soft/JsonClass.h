@@ -2,8 +2,8 @@
 #define JSONCLASS_H
 
 #include <string>
-#include <jsoncpp/json/value.h>
-#include <jsoncpp/json/json.h>
+#include "./src/jsoncpp/json/value.h"
+#include "./src/jsoncpp/json/json.h"
 
 class JsonClass
 {
