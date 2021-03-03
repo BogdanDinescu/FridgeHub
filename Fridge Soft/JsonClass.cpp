@@ -2,7 +2,8 @@
 #include <fstream>
 #include "JsonClass.h"
 
-JsonClass::JsonClass() {
+JsonClass::JsonClass()
+{
     file_path = "../Fridge.json";
     std::ifstream file_input(file_path);
 
@@ -11,6 +12,7 @@ JsonClass::JsonClass() {
     file_input.close();
 }
 
-void JsonClass::printJson() {
+void JsonClass::printJson()
+{
     std::cout << jsonInformation << std::endl;
 }

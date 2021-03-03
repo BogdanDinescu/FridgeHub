@@ -1,9 +1,9 @@
 #include <iostream>
-#include "JsonClass.h"
+#include "JsonClass.hpp"
 
 // g++ main.cpp JsonClass.cpp -ljsoncpp -o main
 
-int main(int argc, char** argv)
+int main(int argc, char **argv)
 {
     JsonClass a;
     a.printJson();
