@@ -13,8 +13,8 @@ struct InputHandler : public Http::Handler {
     std::cout<<jsonValue.asString();
     const Json::Value items = jsonValue["Booting Parameters"]["Main Fridge"]["Items"];
     
-    for (int i = 0; i < items.size(); ++i )
-      std::cout<<items[i].get("Name","Nu s-a gasit nume").asString()<<std::endl;
-    writer.send(Http::Code::Ok, "Hello, World!");
+    //for (int i = 0; i < items.size(); ++i )
+    //  std::cout<<items[i].get("Name","Nu s-a gasit nume").asString()<<std::endl;
+    writer.send(Http::Code::Ok, items[0]["Name"].asString());
   }
 };

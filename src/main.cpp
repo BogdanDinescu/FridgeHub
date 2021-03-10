@@ -7,8 +7,7 @@
 int main(int argc, char** argv)
 {
     JsonClass a;
-    a.parseFile("../Fridge.json");
-    a.printJson();
+    //a.parseFile("../Fridge.json");
+    //a.printJson();
     Http::listenAndServe<InputHandler>(Pistache::Address("*:8080"));
-    //return 0;
 }

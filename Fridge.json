@@ -1,46 +1,38 @@
 {
-    "Booting Parameters" : [
-        {
-            "Main Fridge" : [
+    "Booting Parameters": {
+        "Main Fridge" : {
+            "Items" : [
                 {
-                    "Items" : [
-                        {
-                            "Name" : "Lapte Sana",
-                            "Quantity" : 3,
-                            "Kcal" : 42.30,
-                            "Weight" : 1
-                        },
-                        {
-                            "Name" : "Lapte Zuzu",
-                            "Quantity" : 2,
-                            "Kcal" : 40.90,
-                            "Weight" : 1
-                        }
-                    ],
-                    "Temperature" : 4.0
+                    "Name" : "Lapte Sana",
+                    "Quantity" : 3,
+                    "Kcal" : 42.30,
+                    "Weight" : 1
+                },
+                {
+                    "Name" : "Lapte Zuzu",
+                    "Quantity" : 2,
+                    "Kcal" : 40.90,
+                    "Weight" : 1
                 }
-            ]
+            ],
+            "Temperature" : 4.0
         },
-        {
-            "Freezer" : [
+        "Freezer" : {
+            "Items" : [
                 {
-                    "Items" : [
-                        {
-                            "Name" : "Mici",
-                            "Quantity" : 5,
-                            "Kcal" : 345,
-                            "Weight" : 1
-                        },
-                        {
-                            "Name" : "Pizza Congelata",
-                            "Quantity" : 2,
-                            "Kcal" : 700,
-                            "Weight" : 0.30
-                        }
-                    ],
-                    "Temperature" : -20.0
+                    "Name" : "Mici",
+                    "Quantity" : 5,
+                    "Kcal" : 345,
+                    "Weight" : 1
+                },
+                {
+                    "Name" : "Pizza Congelata",
+                    "Quantity" : 2,
+                    "Kcal" : 700,
+                    "Weight" : 0.30
                 }
-            ]
+            ],
+            "Temperature" : -20.0
         }
-    ]
-}
+    }
+} 
