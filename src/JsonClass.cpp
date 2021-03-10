@@ -18,5 +18,10 @@ void JsonClass::parseFile(std::string str) {
 }
 
 Json::Value JsonClass::parseString(std::string str) {
-    return reader.parse(str.c_str(), jsonInformation);
+    bool ok = reader.parse(str.c_str(), jsonInformation);
+    if ( !ok )
+    {
+        std::cout<<"Failed to parse configuration\n"<< reader.getFormattedErrorMessages();
+    }
+    return jsonInformation;
 }
