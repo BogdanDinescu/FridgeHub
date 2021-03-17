@@ -1,21 +1,19 @@
 #include <iostream>
 #include <string>
-
-typedef struct itemDate{
-    int day, month, year;
-}; 
+#include "ItemDate.h"
 
 class Item
 {
 public:
     Item();
+    Item(std::string, ItemDate, float, float);
     ~Item();
 
     std::string getName();
     void setName(std::string);
 
-    itemDate getItemDate();
-    void setItemDate(itemDate);
+    ItemDate getItemDate();
+    void setItemDate(ItemDate);
 
     float getWeight();
     void setWeight(float);
@@ -24,7 +22,7 @@ public:
     void setCalories(float);
 private:
     std::string name;
-    itemDate itemExpDate;
+    ItemDate itemExpDate;
     float weight;
     float calories;
 };

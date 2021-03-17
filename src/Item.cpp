@@ -4,6 +4,13 @@ Item::Item()
 {}
 Item::~Item()
 {}
+Item::Item(std::string name, ItemDate itemExpDate, float weight, float calories)
+{
+    this->name = name;
+    this->itemExpDate = itemExpDate;
+    this->weight = weight;
+    this->calories = calories;
+}
 
 std::string Item::getName()
 {
@@ -14,11 +21,11 @@ void Item::setName(std::string nume)
     this->name = nume;
 }
 
-itemDate Item::getItemDate()
+ItemDate Item::getItemDate()
 {
     return this->itemExpDate;
 }
-void Item::setItemDate(itemDate x)
+void Item::setItemDate(ItemDate x)
 {
     this->itemExpDate.day = x.day;
     this->itemExpDate.month = x.month;
