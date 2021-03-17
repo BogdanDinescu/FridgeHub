@@ -11,6 +11,7 @@ public:
     void addItem(Item);
     void addItem(std::string, ItemDate, float, float);
     bool removeItemByName(std::string);
+    std::string getItem(std::string);
 private:
     int temp;
     std::list<Item> items;
