@@ -35,36 +35,48 @@ private:
         Routes::Post(router, "/settings/temp/:value", Routes::bind(&Endpoint::setTemp, this));
         Routes::Get(router, "/settings/temp", Routes::bind(&Endpoint::getTemp, this));
         Routes::Post(router, "/items", Routes::bind(&Endpoint::addItem, this));
+        Routes::Get(router, "/item/:name", Routes::bind(&Endpoint::getItem, this));
     }
 
     void setTemp(const Rest::Request& request, Http::ResponseWriter response) {
         int value = request.param(":value").as<int>();
-        //fridge->setTemp(value);
+        fridge.setTemp(value);
         response.send(Http::Code::Ok,  "Temp was set to " + request.param(":value").as<std::string>());
     }
 
     void getTemp(const Rest::Request& request, Http::ResponseWriter response) {
         using namespace Http;
-        //int value = fridge.getTemp();
-        //std::string s_value = std::to_string(value);
-        //response.headers()
-         //       .add<Header::Server>("pistache/0.1")
-        //        .add<Header::ContentType>(MIME(Text, Plain));
+        int value = fridge.getTemp();
+        std::string s_value = std::to_string(value);
+        response.headers()
+               .add<Header::Server>("pistache/0.1")
+                .add<Header::ContentType>(MIME(Text, Plain));
 
-        //response.send(Http::Code::Ok, s_value);
+        response.send(Http::Code::Ok, s_value);
     }
 
     void addItem(const Rest::Request& request, Http::ResponseWriter response) {
         JsonClass json;
         Json::Value root = json.parseString(request.body());
-        /*ItemDate date;
+        ItemDate date;
         fridge.addItem(
             root["name"].asString(),
             date.stringToItemDate(root["itemExpDate"].asString()),
             root["weight"].asFloat(),
             root["calories"].asFloat()
-            );*/
+            );
         response.send(Http::Code::Ok, "Item added");
+    }
+
+    void getItem(const Rest::Request& request, Http::ResponseWriter response) {
+        using namespace Http;
+        std::string name = request.param(":name").as<std::string>();
+        std::string value = fridge.getItem(name);
+        response.headers()
+               .add<Header::Server>("pistache/0.1")
+                .add<Header::ContentType>(MIME(Text, Plain));
+
+        response.send(Http::Code::Ok, value);
     }
 
     Fridge fridge;

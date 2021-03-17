@@ -28,12 +28,23 @@ void Fridge::addItem(std::string name, ItemDate itemExpDate, float weight, float
     this->items.push_back(i);
 }
 
+std::string Fridge::getItem(std::string name)
+{
+    for (auto i=items.begin(); i!=items.end(); ++i)
+    {
+        if((*i).getName().compare(name) == 0) {
+            return (*i).getName() + std::to_string((*i).getWeight()) + std::to_string((*i).getWeight());
+        }
+    }
+    return "";
+}
+
 bool Fridge::removeItemByName(std::string s)
 {
-    for (auto i:items)
+    for (auto i=items.begin(); i!=items.end(); ++i)
     {
-        if(i.getName().compare(s) == 0) {
-            items.remove(i);
+        if((*i).getName().compare(s) == 0) {
+            items.erase(i);
             return true;
         }
     }
