@@ -1,14 +1,17 @@
-#include <iostream>
+#include "Fridge.h"
 
-class Fridge {
-public:
-    explicit Fridge(){ }
-    int getTemp() {
-        return temp;
-    }
-    void setTemp(int t) {
-        this->temp = t;
-    }
-private:
-    int temp;
-};
+Fridge::Fridge()
+{
+}
+
+Fridge::~Fridge(){}
+
+int Fridge::getTemp() 
+{
+    return temp;
+}
+
+void Fridge::setTemp(int t) 
+{
+    this->temp = t;
+}
