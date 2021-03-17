@@ -17,13 +17,8 @@ int main(int argc, char** argv)
         perror("install signal handler failed");
         return 1;
     }
-    //JsonClass a;
-    //a.parseFile("../Fridge.json");
-    //a.printJson();
-    //Http::listenAndServe<InputHandler>(Pistache::Address("*:8080"));
-    Port port(9080);
 
-    // Number of threads used by the server
+    Port port(9080);
     int thr = 2;
 
     if (argc >= 2) {
@@ -44,7 +39,6 @@ int main(int argc, char** argv)
     // Initialize and start the server
     stats.init(thr);
     stats.start();
-
 
     // Code that waits for the shutdown sinal for the server
     int signal = 0;
