@@ -1,11 +1,4 @@
-#include <pistache/net.h>
-#include <pistache/http.h>
-#include <pistache/peer.h>
-#include <pistache/http_headers.h>
-#include <pistache/cookie.h>
 #include <pistache/router.h>
-#include <pistache/endpoint.h>
-#include <pistache/common.h>
 #include "Fridge.cpp"
 
 using namespace Pistache;
