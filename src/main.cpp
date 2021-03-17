@@ -4,7 +4,7 @@
 #include "InputHandler.cpp"
 #include "Endpoint.cpp"
 
-// g++ main.cpp JsonClass.cpp -ljsoncpp -o main
+// g++ main.cpp JsonClass.cpp Fridge.cpp Item.cpp -ljsoncpp -lpistache -lpthread -o main
 
 int main(int argc, char** argv)
 {
