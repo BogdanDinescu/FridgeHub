@@ -2,22 +2,22 @@
 A smart and cool fridge simulator
 
 # Install dependecies
-- Install pistache \
+- Install pistache 
 ```
-git clone --recurse-submodules https://github.com/pistacheio/pistache.git \
-cd pistache \
-mkdir build && cd build \
-cmake -DCMAKE_BUILD_TYPE=Release .. \
-make \
+git clone --recurse-submodules https://github.com/pistacheio/pistache.git
+cd pistache 
+mkdir build && cd build 
+cmake -DCMAKE_BUILD_TYPE=Release .. 
+make 
 sudo make install
 ```
 
-- Install json parse library \
+- Install json parse library 
 ```
 sudo apt-get install libjsoncpp-dev
 ```
 
-- Compile \
+- Compile 
 ```
 g++ main.cpp JsonClass.cpp Fridge.cpp Item.cpp -ljsoncpp -lpistache -lpthread -o main
 ```
