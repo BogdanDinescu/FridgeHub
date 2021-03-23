@@ -35,6 +35,7 @@ private:
         Routes::Post(router, "/settings/temp/:value", Routes::bind(&Endpoint::setTemp, this));
         Routes::Get(router, "/settings/temp", Routes::bind(&Endpoint::getTemp, this));
         Routes::Post(router, "/items", Routes::bind(&Endpoint::addItem, this));
+        Routes::Get(router, "/items", Routes::bind(&Endpoint::getItems, this));
         Routes::Get(router, "/item/:name", Routes::bind(&Endpoint::getItem, this));
     }
 
