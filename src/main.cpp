@@ -5,6 +5,14 @@
 #include "Endpoint.cpp"
 
 // g++ main.cpp JsonClass.cpp Fridge.cpp Item.cpp -ljsoncpp -lpistache -lpthread -o main
+/*
+{
+"name" : "Lapte",
+"itemExpDate" : "01/05/2010",
+"weight" : 42.30,
+"calories" : 300
+}
+*/
 
 int main(int argc, char** argv)
 {

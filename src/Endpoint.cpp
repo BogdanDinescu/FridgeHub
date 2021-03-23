@@ -36,6 +36,7 @@ private:
         Routes::Get(router, "/settings/temp", Routes::bind(&Endpoint::getTemp, this));
         Routes::Post(router, "/items", Routes::bind(&Endpoint::addItem, this));
         Routes::Get(router, "/item/:name", Routes::bind(&Endpoint::getItem, this));
+        Routes::Get(router, "/expired", Routes::bind(&Endpoint::getExpired, this));
     }
 
     void setTemp(const Rest::Request& request, Http::ResponseWriter response) {
@@ -76,6 +77,18 @@ private:
                .add<Header::Server>("pistache/0.1")
                 .add<Header::ContentType>(MIME(Text, Plain));
 
+        response.send(Http::Code::Ok, value);
+    }
+
+    /* functie care trimite itemele care au expirat */
+    void getExpired(const Rest::Request& request, Http::ResponseWriter response)
+    {
+        using namespace Http;
+        std::string value = fridge.getExpiredItems();
+        response.headers()
+               .add<Header::Server>("pistache/0.1")
+                .add<Header::ContentType>(MIME(Text, Plain));
+        
         response.send(Http::Code::Ok, value);
     }
 

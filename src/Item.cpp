@@ -52,5 +52,5 @@ float Item::getCalories()
 }
 void Item::setCalories(float calories)
 {
-    this->calories =  calories;
+    this->calories = calories;
 }

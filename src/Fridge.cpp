@@ -1,5 +1,6 @@
 #include "Fridge.h"
 #include <list>
+#include <time.h>
 
 Fridge::Fridge()
 {
@@ -51,4 +52,28 @@ bool Fridge::removeItemByName(std::string s)
         }
     }
     return false;
+}
+
+std::string Fridge::getExpiredItems()
+{
+    /* partea asta este pentru a obtine data curenta */
+    time_t theTime = time(NULL);
+    struct tm *aTime = localtime(&theTime);
+    int curr_day = aTime->tm_mday;
+    int curr_month = aTime->tm_mon + 1;
+    int curr_year = aTime->tm_year + 1900;
+    ItemDate now(curr_day, curr_month, curr_year);
+
+    std::string res = "";
+    for (auto i=items.begin(); i!=items.end(); ++i)
+    {
+        if ((*i).getItemDate() < now)
+        {
+            res += (*i).getName();
+            res += ",";
+        }
+    }
+    if (res.size() != 0)
+        res.pop_back();
+    return res;
 }
