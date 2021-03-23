@@ -1,8 +1,8 @@
-# FridgeHub
+# FridgeHub :ice_cube:
 A smart and cool fridge simulator
 
 # Install dependecies
-- Install pistache 
+- Install pistache
 ```
 git clone --recurse-submodules https://github.com/pistacheio/pistache.git
 cd pistache 
