@@ -15,6 +15,8 @@ public:
     ItemDate getItemDate();
     void setItemDate(ItemDate);
 
+    std::string getStringItemDate();
+
     float getWeight();
     void setWeight(float);
 

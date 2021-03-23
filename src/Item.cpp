@@ -32,6 +32,11 @@ void Item::setItemDate(ItemDate x)
     this->itemExpDate.year = x.year;
 }
 
+std::string Item::getStringItemDate()
+{
+    return itemExpDate.getString();
+}
+
 float Item::getWeight()
 {
     return this->weight;

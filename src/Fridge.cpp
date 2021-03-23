@@ -33,7 +33,9 @@ std::string Fridge::getItem(std::string name)
     for (auto i=items.begin(); i!=items.end(); ++i)
     {
         if((*i).getName().compare(name) == 0) {
-            return (*i).getName() + std::to_string((*i).getWeight()) + std::to_string((*i).getWeight());
+            return "{ \"name\" : \"" + (*i).getName() + "\",\"itemExpDate\":" + (*i).getStringItemDate() +
+                    + ",\"weight\" :" + std::to_string((*i).getWeight())
+                    + ",\"calories\" :" + std::to_string((*i).getCalories()) + "}";
         }
     }
     return "";
