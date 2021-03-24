@@ -9,6 +9,8 @@ public:
     int getTemp();
     void setTemp(int);
     void addItem(Item);
+    std::list<Item> getItems();
+    std::string getItemsAsString();
     void addItem(std::string, ItemDate, float, float);
     bool removeItemByName(std::string);
     std::string getItem(std::string);

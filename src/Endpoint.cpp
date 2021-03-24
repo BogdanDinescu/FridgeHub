@@ -37,6 +37,7 @@ private:
         Routes::Post(router, "/items/add", Routes::bind(&Endpoint::addItem, this));
         Routes::Get(router, "/items/:name", Routes::bind(&Endpoint::getItem, this));
         Routes::Get(router, "/items/expired", Routes::bind(&Endpoint::getExpired, this));
+        Routes::Get(router, "/items", Routes::bind(&Endpoint::getItems, this));
     }
 
     void setTemp(const Rest::Request& request, Http::ResponseWriter response) {
@@ -89,6 +90,19 @@ private:
                .add<Header::Server>("pistache/0.1")
                 .add<Header::ContentType>(MIME(Text, Plain));
         
+        response.send(Http::Code::Ok, value);
+    }
+
+    /* functie care trimite toate itemele */
+    void getItems(const Rest::Request& request, Http::ResponseWriter response)
+    {
+        using namespace Http;
+        std::string value = fridge.getItemsAsString();
+
+        response.headers()
+               .add<Header::Server>("pistache/0.1")
+                .add<Header::ContentType>(MIME(Text, Plain));
+
         response.send(Http::Code::Ok, value);
     }
 

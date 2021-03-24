@@ -23,6 +23,29 @@ void Fridge::addItem(Item item)
     this->items.push_back(item);
 }
 
+std::list<Item> Fridge::getItems()
+{
+    return this->items;
+}
+
+std::string Fridge::getItemsAsString()
+{
+    std::string res = "";
+
+    for (auto i = this->items.begin(); i != this->items.end(); ++i)
+    {
+        res += (*i).getName();
+        res += ",";
+    }
+
+    if (res.size() != 0)
+    {
+        res.pop_back();
+    }
+
+    return res;
+}
+
 void Fridge::addItem(std::string name, ItemDate itemExpDate, float weight, float calories)
 {
     Item i(name, itemExpDate, weight, calories);
