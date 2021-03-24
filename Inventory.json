@@ -1,0 +1,16 @@
+{
+    "Items" : [
+        {
+            "name" : "Lapte",
+            "itemExpDate" : "01/05/2010",
+            "weight" : 42.30,
+            "calories" : 300
+        },
+        {
+            "name" : "Nuci",
+            "itemExpDate" : "01/05/2010",
+            "weight" : 43.30,
+            "calories" : 200
+        }
+    ]
+}

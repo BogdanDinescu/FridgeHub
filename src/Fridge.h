@@ -9,6 +9,7 @@ public:
     int getTemp();
     void setTemp(int);
     void addItem(Item);
+    void loadItems(std::string);
     std::list<Item> getItems();
     std::string getItemsAsString();
     void addItem(std::string, ItemDate, float, float);

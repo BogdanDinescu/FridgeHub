@@ -7,7 +7,9 @@ class Endpoint {
 public:
     explicit Endpoint(Address addr)
         : httpEndpoint(std::make_shared<Http::Endpoint>(addr))
-    { }
+    {
+        fridge.loadItems("../Inventory.json");
+    }
 
     // Initialization of the server. Additional options can be provided here
     void init(size_t thr = 2) {

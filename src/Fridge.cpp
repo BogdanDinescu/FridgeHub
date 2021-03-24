@@ -1,4 +1,5 @@
 #include "Fridge.h"
+#include "JsonClass.h"
 #include <list>
 #include <time.h>
 
@@ -44,6 +45,27 @@ std::string Fridge::getItemsAsString()
     }
 
     return res;
+}
+
+void Fridge::loadItems(std::string filePath)
+{
+    JsonClass js;
+    js.parseFile(filePath);
+    static Json::Value  jsonValues = js.getJsonInformation();
+
+    if (jsonValues.isMember("Items"))
+    {
+        const Json::Value itemsFromJson = jsonValues["Items"];
+        for ( auto itemFromJson : itemsFromJson )
+        {
+            ItemDate data;
+            data.stringToItemDate(itemFromJson["itemExpDate"].asString());
+
+            Item item(itemFromJson["name"].asString(), data, itemFromJson["weight"].asFloat(), itemFromJson["calories"].asFloat());
+
+            this->items.push_back(item);
+        }
+    }
 }
 
 void Fridge::addItem(std::string name, ItemDate itemExpDate, float weight, float calories)

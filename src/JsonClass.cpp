@@ -12,9 +12,18 @@ void JsonClass::parseFile(std::string str) {
     this->file_path = str;
     std::ifstream file_input(file_path);
 
-    reader.parse(file_input, jsonInformation);
+    bool ok = reader.parse(file_input, jsonInformation);
+    if ( !ok )
+    {
+        std::cout<<"Failed to parse configuration\n"<< reader.getFormattedErrorMessages();
+    }
 
     file_input.close();
+}
+
+Json::Value JsonClass::getJsonInformation()
+{
+    return jsonInformation;
 }
 
 Json::Value JsonClass::parseString(std::string str) {
