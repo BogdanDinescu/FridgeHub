@@ -41,6 +41,7 @@ private:
         Routes::Get(router, "/items/expired", Routes::bind(&Endpoint::getExpired, this));
         Routes::Get(router, "/items", Routes::bind(&Endpoint::getItems, this));
         Routes::Post(router, "/items/remove", Routes::bind(&Endpoint::removeItem, this));
+        Routes::Put(router, "/update", Routes::bind(&Endpoint::updateItem, this));
     }
 
     void setTemp(const Rest::Request& request, Http::ResponseWriter response) {
@@ -117,6 +118,21 @@ private:
         fridge.removeItemByName(value);
 
         response.send(Http::Code::Ok, "Item removed");
+    }
+
+    void updateItem(const Rest::Request& request, Http::ResponseWriter response)
+    {
+        JsonClass json;
+        Json::Value root = json.parseString(request.body());
+
+        std::string value = root["name"].asString();
+        float wval = root["weight"].asFloat();
+        bool res = fridge.updateItem(value, wval);
+
+        if (res)
+            response.send(Http::Code::Ok, "Items updated!");
+        else
+            response.send(Http::Code::Ok, "The item could not be updated");
     }
 
     Fridge fridge;

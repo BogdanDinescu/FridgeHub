@@ -122,3 +122,29 @@ std::string Fridge::getExpiredItems()
         res.pop_back();
     return res;
 }
+
+/* 
+    Functia asta intoarce true daca a fost updatat produsul cu succes,
+    intoarce false daca am mancat toata cantitatea(din acel produs),
+    sau daca am dat un nume de produs care nu exista sau altceva
+*/
+bool Fridge::updateItem(std::string name, float wvalue)
+{
+    for (auto i = items.begin(); i != items.end(); ++i)
+    {
+        if ((*i).getName().compare(name) == 0)
+        {
+            /* in change_weight am valoarea ramasa dupa ce am mancat wvalue unitati de masa, din produsul cu numele dat 'name' */
+            float change_weight = (*i).getWeight() - wvalue;
+            if (change_weight < 0) 
+            {
+                items.erase(i);
+                return false;
+            }
+            (*i).setWeight(change_weight);
+            return true;
+        }
+    }
+
+    return false;
+}

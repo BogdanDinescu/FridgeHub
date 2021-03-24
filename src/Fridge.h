@@ -16,6 +16,7 @@ public:
     bool removeItemByName(std::string);
     std::string getItem(std::string);
     std::string getExpiredItems();
+    bool updateItem(std::string, float);
 private:
     int temp;
     std::list<Item> items;
