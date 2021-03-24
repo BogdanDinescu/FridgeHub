@@ -1,5 +1,4 @@
 #include "Fridge.h"
-#include "JsonClass.h"
 #include <list>
 #include <time.h>
 
@@ -74,7 +73,7 @@ void Fridge::addItem(std::string name, ItemDate itemExpDate, float weight, float
     this->items.push_back(i);
 }
 
-std::string Fridge::getItem(std::string name)
+std::string Fridge::getItemAsString(std::string name)
 {
     for (auto i=items.begin(); i!=items.end(); ++i)
     {
@@ -97,6 +96,38 @@ bool Fridge::removeItemByName(std::string s)
         }
     }
     return false;
+}
+
+
+// payload is json object. It contains a list with items with name and weight
+float Fridge::calculateCalories(Json::Value payload)
+{
+    float calories = 0;
+    if (payload.isMember("Items"))
+    {
+        const Json::Value itemsFromJson = payload["Items"];
+        for (auto itemFromJson : itemsFromJson )
+        {
+            std::string name = itemFromJson["name"].asString();
+            float weight = itemFromJson["weight"].asFloat();
+            Item* item = getItem(name);
+            if (item != NULL) {
+                float c = item->getCalories();
+                calories += c*weight; // Calorii per unitate * cantitatea
+            }
+        }
+    }
+    return calories;
+}
+
+Item* Fridge::getItem(std::string name) {
+    for (auto i = items.begin(); i != items.end(); ++i)
+    {
+        if((*i).getName().compare(name) == 0) {
+            return &(*i);
+        }
+    }
+    return NULL;
 }
 
 std::string Fridge::getExpiredItems()

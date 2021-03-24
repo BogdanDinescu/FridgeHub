@@ -1,5 +1,6 @@
 #include <pistache/router.h>
 #include "Fridge.h"
+#include "JsonClass.h"
 
 using namespace Pistache;
 
@@ -42,6 +43,7 @@ private:
         Routes::Get(router, "/items", Routes::bind(&Endpoint::getItems, this));
         Routes::Post(router, "/items/remove", Routes::bind(&Endpoint::removeItem, this));
         Routes::Put(router, "/update", Routes::bind(&Endpoint::updateItem, this));
+        Routes::Post(router, "/items/calories", Routes::bind(&Endpoint::calories, this));
     }
 
     void setTemp(const Rest::Request& request, Http::ResponseWriter response) {
@@ -77,7 +79,7 @@ private:
     void getItem(const Rest::Request& request, Http::ResponseWriter response) {
         using namespace Http;
         std::string name = request.param(":name").as<std::string>();
-        std::string value = fridge.getItem(name);
+        std::string value = fridge.getItemAsString(name);
         response.headers()
                .add<Header::Server>("pistache/0.1")
                 .add<Header::ContentType>(MIME(Text, Plain));
@@ -133,6 +135,15 @@ private:
             response.send(Http::Code::Ok, "Items updated!");
         else
             response.send(Http::Code::Ok, "The item could not be updated");
+    }
+    
+    void calories(const Rest::Request& request, Http::ResponseWriter response) {
+        JsonClass json;
+        Json::Value root = json.parseString(request.body());
+
+        float calories = fridge.calculateCalories(root);
+
+        response.send(Http::Code::Ok, std::to_string(calories));
     }
 
     Fridge fridge;
