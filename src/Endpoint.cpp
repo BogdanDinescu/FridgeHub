@@ -38,6 +38,7 @@ private:
         Routes::Get(router, "/items/:name", Routes::bind(&Endpoint::getItem, this));
         Routes::Get(router, "/items/expired", Routes::bind(&Endpoint::getExpired, this));
         Routes::Get(router, "/items", Routes::bind(&Endpoint::getItems, this));
+        Routes::Post(router, "/items/remove", Routes::bind(&Endpoint::removeItem, this));
     }
 
     void setTemp(const Rest::Request& request, Http::ResponseWriter response) {
@@ -104,6 +105,16 @@ private:
                 .add<Header::ContentType>(MIME(Text, Plain));
 
         response.send(Http::Code::Ok, value);
+    }
+
+    void removeItem(const Rest::Request& request, Http::ResponseWriter response) {
+        JsonClass json;
+        Json::Value root = json.parseString(request.body());
+
+        std::string value = root["name"].asString();
+        fridge.removeItemByName(value);
+
+        response.send(Http::Code::Ok, "Item removed");
     }
 
     Fridge fridge;

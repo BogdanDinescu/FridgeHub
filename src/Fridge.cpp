@@ -67,7 +67,7 @@ std::string Fridge::getItem(std::string name)
 
 bool Fridge::removeItemByName(std::string s)
 {
-    for (auto i=items.begin(); i!=items.end(); ++i)
+    for (auto i = items.begin(); i != items.end(); ++i)
     {
         if((*i).getName().compare(s) == 0) {
             items.erase(i);
