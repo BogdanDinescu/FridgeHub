@@ -58,9 +58,9 @@ void Fridge::loadItems(std::string filePath)
         for ( auto itemFromJson : itemsFromJson )
         {
             ItemDate data;
-            data.stringToItemDate(itemFromJson["itemExpDate"].asString());
+            ItemDate parsedData = data.stringToItemDate(itemFromJson["itemExpDate"].asString());
 
-            Item item(itemFromJson["name"].asString(), data, itemFromJson["weight"].asFloat(), itemFromJson["calories"].asFloat());
+            Item item(itemFromJson["name"].asString(), parsedData, itemFromJson["weight"].asFloat(), itemFromJson["calories"].asFloat());
 
             this->items.push_back(item);
         }
