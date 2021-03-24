@@ -34,9 +34,9 @@ private:
         //Rest::Routes::Get(router, "/auth", Routes::bind(&MicrowaveEndpoint::doAuth, this));
         Routes::Post(router, "/settings/temp/:value", Routes::bind(&Endpoint::setTemp, this));
         Routes::Get(router, "/settings/temp", Routes::bind(&Endpoint::getTemp, this));
-        Routes::Post(router, "/items", Routes::bind(&Endpoint::addItem, this));
-        Routes::Get(router, "/item/:name", Routes::bind(&Endpoint::getItem, this));
-        Routes::Get(router, "/expired", Routes::bind(&Endpoint::getExpired, this));
+        Routes::Post(router, "/items/add", Routes::bind(&Endpoint::addItem, this));
+        Routes::Get(router, "/items/:name", Routes::bind(&Endpoint::getItem, this));
+        Routes::Get(router, "/items/expired", Routes::bind(&Endpoint::getExpired, this));
     }
 
     void setTemp(const Rest::Request& request, Http::ResponseWriter response) {
