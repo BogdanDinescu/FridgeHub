@@ -185,7 +185,9 @@ float Fridge::getTotalCalories()
     float total = 0;
     for (auto i=items.begin(); i!=items.end(); ++i)
     {
+        if (!i->isExpired()){
         total += i->getCalories() * i->getWeight();
+        }
     }
 
     return total;

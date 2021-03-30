@@ -54,3 +54,22 @@ void Item::setCalories(float calories)
 {
     this->calories = calories;
 }
+
+bool Item::isExpired()
+{
+    // get current time
+    time_t theTime = time(NULL);
+    struct tm *aTime = localtime(&theTime);
+    int curr_day = aTime->tm_mday;
+    int curr_month = aTime->tm_mon + 1;
+    int curr_year = aTime->tm_year + 1900;
+    ItemDate now(curr_day, curr_month, curr_year);
+
+    if (this->itemExpDate < now)
+    {
+        return true;
+    }
+
+    return false;
+
+}

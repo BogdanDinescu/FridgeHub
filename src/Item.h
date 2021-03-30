@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <time.h>
 #include "ItemDate.h"
 
 class Item
@@ -22,6 +23,8 @@ public:
 
     float getCalories();
     void setCalories(float);
+
+    bool isExpired();
 private:
     std::string name;
     ItemDate itemExpDate;
