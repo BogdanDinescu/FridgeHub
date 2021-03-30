@@ -132,20 +132,12 @@ Item* Fridge::getItem(std::string name) {
 
 std::string Fridge::getExpiredItems()
 {
-    /* partea asta este pentru a obtine data curenta */
-    time_t theTime = time(NULL);
-    struct tm *aTime = localtime(&theTime);
-    int curr_day = aTime->tm_mday;
-    int curr_month = aTime->tm_mon + 1;
-    int curr_year = aTime->tm_year + 1900;
-    ItemDate now(curr_day, curr_month, curr_year);
-
     std::string res = "";
     for (auto i=items.begin(); i!=items.end(); ++i)
     {
-        if ((*i).getItemDate() < now)
+        if (i->isExpired())
         {
-            res += (*i).getName();
+            res += i->getName();
             res += ",";
         }
     }
