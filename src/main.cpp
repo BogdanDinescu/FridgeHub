@@ -14,7 +14,7 @@
 }
 */
 
-int main(int argc, char** argv)
+void pistache_thread(int argc, char** argv)
 {
     sigset_t signals;
     if (sigemptyset(&signals) != 0
@@ -23,10 +23,10 @@ int main(int argc, char** argv)
             || sigaddset(&signals, SIGHUP) != 0
             || pthread_sigmask(SIG_BLOCK, &signals, nullptr) != 0) {
         perror("install signal handler failed");
-        return 1;
+        return;
     }
 
-    Port port(9080);
+    Port port(8080);
     int thr = 2;
 
     if (argc >= 2) {
@@ -61,4 +61,10 @@ int main(int argc, char** argv)
     }
 
     stats.stop();
+}
+
+int main(int argc, char** argv)
+{
+    pistache_thread(argc, argv);
+    return 0;
 }
