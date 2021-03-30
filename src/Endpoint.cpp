@@ -44,6 +44,7 @@ private:
         Routes::Post(router, "/items/remove", Routes::bind(&Endpoint::removeItem, this));
         Routes::Put(router, "/update", Routes::bind(&Endpoint::updateItem, this));
         Routes::Post(router, "/items/calories", Routes::bind(&Endpoint::calories, this));
+        Routes::Get(router, "/calories", Routes::bind(&Endpoint::getTotalCalories, this));
     }
 
     void setTemp(const Rest::Request& request, Http::ResponseWriter response) {
@@ -144,6 +145,12 @@ private:
         float calories = fridge.calculateCalories(root);
 
         response.send(Http::Code::Ok, std::to_string(calories));
+    }
+
+    void getTotalCalories(const Rest::Request& request, Http::ResponseWriter response) {
+        float total_calories = fridge.getTotalCalories();
+
+        response.send(Http::Code::Ok, std::to_string(total_calories));
     }
 
     Fridge fridge;

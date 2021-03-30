@@ -179,3 +179,14 @@ bool Fridge::updateItem(std::string name, float wvalue)
 
     return false;
 }
+
+float Fridge::getTotalCalories()
+{
+    float total = 0;
+    for (auto i=items.begin(); i!=items.end(); ++i)
+    {
+        total += i->getCalories() * i->getWeight();
+    }
+
+    return total;
+}

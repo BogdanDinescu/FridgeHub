@@ -19,6 +19,7 @@ public:
     std::string getExpiredItems();
     bool updateItem(std::string, float);
     float calculateCalories(Json::Value);
+    float getTotalCalories();
 private:
     int temp;
     std::list<Item> items;
