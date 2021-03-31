@@ -1,5 +1,6 @@
 #include <iostream>
 #include <signal.h>
+#include <thread>
 #include "JsonClass.h"
 #include "InputHandler.cpp"
 #include "Endpoint.cpp"
@@ -63,8 +64,20 @@ void pistache_thread(int argc, char** argv)
     stats.stop();
 }
 
+void foo()
+{
+    sleep(5);
+    std::cout << "honey pot!\n";
+}
+
 int main(int argc, char** argv)
 {
-    pistache_thread(argc, argv);
+    std::thread thread1(pistache_thread, argc, argv);
+    std::thread thread2(foo);
+
+    thread1.join();
+    thread2.join();
+    //pistache_thread(argc, argv);
+    std::cout << (int)(1000/60);
     return 0;
 }
