@@ -22,8 +22,8 @@ Post: http://localhost:8080/items/remove
 updateItem   (este trimis un json cu un item si modifica un item din fridge daca exista)
 Put: http://localhost:8080/update
 
-calories   (calculeaza caloriile pentru o anumita cantitate)
+calories   (calculeaza caloriile pentru o anumita cantitate a unor produse date in body ca json)
 Post: http://localhost:8080/items/calories
 
-getTotalCalories
+getTotalCalories   (calculeaza numarul de calorii al cantitatii de produse care nu au expirat)
 Get: http://localhost:8080/totalCalories
