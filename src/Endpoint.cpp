@@ -40,11 +40,11 @@ private:
         Routes::Post(router, "/items/add", Routes::bind(&Endpoint::addItem, this));
         Routes::Get(router, "/items/:name", Routes::bind(&Endpoint::getItem, this));
         Routes::Get(router, "/items/expired", Routes::bind(&Endpoint::getExpired, this));
-        Routes::Get(router, "/items", Routes::bind(&Endpoint::getItems, this));
+        Routes::Get(router, "/items/getAll", Routes::bind(&Endpoint::getItems, this));
         Routes::Post(router, "/items/remove", Routes::bind(&Endpoint::removeItem, this));
         Routes::Put(router, "/update", Routes::bind(&Endpoint::updateItem, this));
         Routes::Post(router, "/items/calories", Routes::bind(&Endpoint::calories, this));
-        Routes::Get(router, "/calories", Routes::bind(&Endpoint::getTotalCalories, this));
+        Routes::Get(router, "/totalCalories", Routes::bind(&Endpoint::getTotalCalories, this));
     }
 
     void setTemp(const Rest::Request& request, Http::ResponseWriter response) {
@@ -88,7 +88,7 @@ private:
         response.send(Http::Code::Ok, value);
     }
 
-    /* functie care trimite itemele care au expirat */
+    /* functie care intoarce numele itemelor care au expirat */
     void getExpired(const Rest::Request& request, Http::ResponseWriter response)
     {
         using namespace Http;
@@ -123,6 +123,7 @@ private:
         response.send(Http::Code::Ok, "Item removed");
     }
 
+    /* functia primeste un json cu un item si modifica caloriile si cantitatea de produs daca exista */
     void updateItem(const Rest::Request& request, Http::ResponseWriter response)
     {
         JsonClass json;

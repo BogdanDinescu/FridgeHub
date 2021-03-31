@@ -1,0 +1,29 @@
+setTemp
+Post: http://localhost:8080/settings/temp/:value  (:value = int)
+
+getTemp   (primeste temperatura care e string)
+Get: http://localhost:8080/settings/temp
+
+addItem   (trimite un json cu un item)
+Post: http://localhost:8080/items/add
+
+getItem   (intoarce pentru un nume(:name) un string cu toate elementele itemului)
+Get: http://localhost:8080/items/:name
+
+getExpired   (intoarce numele itemelor care au expirat)
+Get: http://localhost:8080/items/expired
+
+getItems   (intoarce un string cu toate numele de produs din fridge)
+Get: http://localhost:8080/items/getAll
+
+removeItem   (sterge un item din lista de iteme)
+Post: http://localhost:8080/items/remove
+
+updateItem   (este trimis un json cu un item si modifica un item din fridge daca exista)
+Put: http://localhost:8080/update
+
+calories   (calculeaza caloriile pentru o anumita cantitate)
+Post: http://localhost:8080/items/calories
+
+getTotalCalories
+Get: http://localhost:8080/totalCalories
