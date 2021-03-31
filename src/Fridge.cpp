@@ -42,7 +42,9 @@ std::string Fridge::getItemsAsString()
     {
         res.pop_back();
     }
-
+    if(res.length() == 0) {
+        res.insert(0,"Nu exista produse");
+    }
     return res;
 }
 
@@ -83,7 +85,7 @@ std::string Fridge::getItemAsString(std::string name)
                     + ",\"calories\" :" + std::to_string((*i).getCalories()) + "}";
         }
     }
-    return "";
+    return "Produsul cautat nu exista";
 }
 
 bool Fridge::removeItemByName(std::string s)
