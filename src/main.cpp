@@ -64,7 +64,7 @@ void pistache_thread(int argc, char** argv)
     stats.stop();
 }
 
-void foo()
+void paho_thread(int argc, char** argv)
 {
     sleep(5);
     std::cout << "honey pot!\n";
@@ -73,11 +73,9 @@ void foo()
 int main(int argc, char** argv)
 {
     std::thread thread1(pistache_thread, argc, argv);
-    std::thread thread2(foo);
+    std::thread thread2(paho_thread, argc, argv);
 
     thread1.join();
     thread2.join();
-    //pistache_thread(argc, argv);
-    std::cout << (int)(1000/60);
     return 0;
 }
