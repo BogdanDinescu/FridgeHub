@@ -4,8 +4,9 @@
 #include "JsonClass.h"
 #include "InputHandler.cpp"
 #include "Endpoint.cpp"
+#include "mqttClient.hpp"
 
-// g++ main.cpp JsonClass.cpp Fridge.cpp Item.cpp -ljsoncpp -lpistache -lpthread -o main
+// g++ main.cpp JsonClass.cpp Fridge.cpp Item.cpp -ljsoncpp -lpistache -lpthread -lmosquitto -o main
 /*
 {
 "name" : "Lapte",
@@ -66,8 +67,32 @@ void pistache_thread(int argc, char** argv)
 
 void paho_thread(int argc, char** argv)
 {
-    sleep(5);
-    std::cout << "honey pot!\n";
+    struct mosquitto *mosq;
+	int rc;
+
+	mosquitto_lib_init();
+
+	mosq = mosquitto_new(NULL, true, NULL);
+	if(mosq == NULL){
+		std::cout<<"Could not start mousquitto!";
+		return;
+	}
+
+	/* Configure callbacks.*/
+	mosquitto_connect_callback_set(mosq, on_connect);
+	mosquitto_subscribe_callback_set(mosq, on_subscribe);
+	mosquitto_message_callback_set(mosq, on_message);
+
+	rc = mosquitto_connect(mosq, "test.mosquitto.org", 1883, 60);
+	if(rc != MOSQ_ERR_SUCCESS){
+		mosquitto_destroy(mosq);
+		std::cout<<mosquitto_strerror(rc);
+		return;
+	}
+
+	mosquitto_loop_forever(mosq, -1, 1);
+
+	mosquitto_lib_cleanup();
 }
 
 int main(int argc, char** argv)
