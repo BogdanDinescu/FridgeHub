@@ -1,5 +1,6 @@
 # FridgeHub :ice_cube:
 A smart and cool fridge simulator
+<br />
 
 # Echipa
 Alexiu Adrian-Stefan
@@ -11,6 +12,7 @@ Dinescu Bogdan-George
 Masgras Vlad-Florian
 <br />
 Sandu Alexandru-Cristian
+<br />
 
 # Install dependecies
 - Install pistache
