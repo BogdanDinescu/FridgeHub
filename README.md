@@ -17,9 +17,15 @@ sudo make install
 sudo apt-get install libjsoncpp-dev
 ```
 
+- Install mosquitto
+```
+sudo apt-get install libmosquitto-dev
+sudo apt-get install mosquitto
+```
+
 - Compile 
 ```
-g++ main.cpp JsonClass.cpp Fridge.cpp Item.cpp -ljsoncpp -lpistache -lpthread -o main
+g++ main.cpp JsonClass.cpp Fridge.cpp Item.cpp -ljsoncpp -lpistache -lpthread -lmosquitto -o main
 ```
 
 # Echipa
