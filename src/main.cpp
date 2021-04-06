@@ -2,7 +2,6 @@
 #include <signal.h>
 #include <thread>
 #include "JsonClass.h"
-#include "InputHandler.cpp"
 #include "Endpoint.cpp"
 #include "mqttClient.hpp"
 

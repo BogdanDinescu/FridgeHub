@@ -1,6 +1,7 @@
 #include <pistache/router.h>
 #include "Fridge.h"
 #include "JsonClass.h"
+#include <pistache/endpoint.h>
 
 using namespace Pistache;
 
