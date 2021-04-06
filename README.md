@@ -4,23 +4,20 @@ A smart and cool fridge simulator
 # Install dependecies
 - Install pistache
 ```
-git clone --recurse-submodules https://github.com/pistacheio/pistache.git
-cd pistache 
-mkdir build && cd build 
-cmake -DCMAKE_BUILD_TYPE=Release .. 
-make 
-sudo make install
+$ sudo add-apt-repository ppa:pistache+team/unstable
+$ sudo apt update
+$ sudo apt install libpistache-dev
 ```
 
 - Install json parse library 
 ```
-sudo apt-get install libjsoncpp-dev
+$ sudo apt-get install libjsoncpp-dev
 ```
 
 - Install mosquitto
 ```
-sudo apt-get install libmosquitto-dev
-sudo apt-get install mosquitto
+$ sudo apt-get install libmosquitto-dev
+$ sudo apt-get install mosquitto
 ```
 
 - Compile 
