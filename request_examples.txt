@@ -1,4 +1,4 @@
-setTemp
+setTemp    (primeste un string pe care il face float si il atribuie variabilei temp din Fridge)
 Post: http://localhost:8080/settings/temp/:value  (:value = int)
 
 getTemp   (primeste temperatura care e string)

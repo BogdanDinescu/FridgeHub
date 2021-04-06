@@ -6,13 +6,14 @@
 #include "mqttClient.hpp"
 
 // g++ main.cpp JsonClass.cpp Fridge.cpp Item.cpp -ljsoncpp -lpistache -lpthread -lmosquitto -o main
+
 /*
-{
-"name" : "Lapte",
-"itemExpDate" : "01/05/2010",
-"weight" : 42.30,
-"calories" : 300
-}
+    {
+        "name" : "Lapte",
+        "itemExpDate" : "01/05/2010",
+        "weight" : 42.30,
+        "calories" : 300
+    }
 */
 
 void pistache_thread(int argc, char** argv)
@@ -64,31 +65,40 @@ void pistache_thread(int argc, char** argv)
     stats.stop();
 }
 
-void paho_thread(int argc, char** argv)
+void mosquitto_thread(int argc, char** argv)
 {
     struct mosquitto *mosq;
 	int rc;
 
+    /* initializare server/lib mosquitto */
 	mosquitto_lib_init();
 
-	mosq = mosquitto_new(NULL, true, NULL);
+	mosq = mosquitto_new(NULL, true, NULL); // creaza un obiect mosquitto
+	
+	/* vrifica daca sa creat obiectul mosq cu succes */
 	if(mosq == NULL){
 		std::cout<<"Could not start mousquitto!";
 		return;
 	}
 
-	/* Configure callbacks.*/
+	/* Configure callbacks */
 	mosquitto_connect_callback_set(mosq, on_connect);
 	mosquitto_subscribe_callback_set(mosq, on_subscribe);
 	mosquitto_message_callback_set(mosq, on_message);
 
+    /* seteaza serverul si portul la care sa se conecteze */
 	rc = mosquitto_connect(mosq, "test.mosquitto.org", 1883, 60);
-	if(rc != MOSQ_ERR_SUCCESS){
+	if(rc != MOSQ_ERR_SUCCESS)
+	{
 		mosquitto_destroy(mosq);
 		std::cout<<mosquitto_strerror(rc);
 		return;
 	}
-
+    
+    /* 
+        -1 pentru a functiona la infinit/pana e oprit
+        1 pentru ca asa trebuie(nu au terminat cei de la mosquitto de implementat)
+    */
 	mosquitto_loop_forever(mosq, -1, 1);
 
 	mosquitto_lib_cleanup();
@@ -97,7 +107,7 @@ void paho_thread(int argc, char** argv)
 int main(int argc, char** argv)
 {
     std::thread thread1(pistache_thread, argc, argv);
-    std::thread thread2(paho_thread, argc, argv);
+    std::thread thread2(mosquitto_thread, argc, argv);
 
     thread1.join();
     thread2.join();
