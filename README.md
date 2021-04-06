@@ -1,6 +1,17 @@
 # FridgeHub :ice_cube:
 A smart and cool fridge simulator
 
+# Echipa
+Alexiu Adrian-Stefan
+<br />
+Bondoc Gabriel
+<br />
+Dinescu Bogdan-George
+<br />
+Masgras Vlad-Florian
+<br />
+Sandu Alexandru-Cristian
+
 # Install dependecies
 - Install pistache
 ```
@@ -24,14 +35,3 @@ $ sudo apt-get install mosquitto
 ```
 g++ main.cpp JsonClass.cpp Fridge.cpp Item.cpp -ljsoncpp -lpistache -lpthread -lmosquitto -o main
 ```
-
-# Echipa
-Alexiu Adrian-Stefan
-<br />
-Bondoc Gabriel
-<br />
-Dinescu Bogdan-George
-<br />
-Masgras Vlad-Florian
-<br />
-Sandu Alexandru-Cristian
