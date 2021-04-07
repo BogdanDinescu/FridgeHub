@@ -6,6 +6,9 @@
 #include "mqttClient.hpp"
 
 // g++ main.cpp JsonClass.cpp Fridge.cpp Item.cpp -ljsoncpp -lpistache -lpthread -lmosquitto -o main
+// mosquitto_pub -h test.mosquitto.org -t 'fridgeHub/temperature' -m -60
+// mosquitto_sub -h test.mosquitto.org -t 'fridgeHub/temperature'
+
 
 /*
     {
@@ -70,36 +73,53 @@ void mosquitto_thread(int argc, char** argv)
     struct mosquitto *mosq;
 	int rc;
 
-    /* initializare server/lib mosquitto */
+	/* Required before calling other mosquitto functions */
 	mosquitto_lib_init();
 
-	mosq = mosquitto_new(NULL, true, NULL); // creaza un obiect mosquitto
-	
-	/* vrifica daca sa creat obiectul mosq cu succes */
+	/* Create a new client instance.
+	 * id = NULL -> ask the broker to generate a client id for us
+	 * clean session = true -> the broker should remove old sessions when we connect
+	 * obj = NULL -> we aren't passing any of our private data for callbacks
+	 */
+	mosq = mosquitto_new(NULL, true, NULL);
 	if(mosq == NULL){
-		std::cout<<"Could not start mousquitto!";
+		fprintf(stderr, "Error: Out of memory.\n");
 		return;
 	}
 
-	/* Configure callbacks */
+	/* Configure callbacks. This should be done before connecting ideally. */
 	mosquitto_connect_callback_set(mosq, on_connect);
-	mosquitto_subscribe_callback_set(mosq, on_subscribe);
-	mosquitto_message_callback_set(mosq, on_message);
+	mosquitto_publish_callback_set(mosq, on_publish);
 
-    /* seteaza serverul si portul la care sa se conecteze */
+	/* Connect to test.mosquitto.org on port 1883, with a keepalive of 60 seconds.
+	 * This call makes the socket connection only, it does not complete the MQTT
+	 * CONNECT/CONNACK flow, you should use mosquitto_loop_start() or
+	 * mosquitto_loop_forever() for processing net traffic. */
 	rc = mosquitto_connect(mosq, "test.mosquitto.org", 1883, 60);
-	if(rc != MOSQ_ERR_SUCCESS)
-	{
+	if(rc != MOSQ_ERR_SUCCESS){
 		mosquitto_destroy(mosq);
-		std::cout<<mosquitto_strerror(rc);
+		fprintf(stderr, "Error: %s\n", mosquitto_strerror(rc));
 		return;
 	}
-    
-    /* 
-        -1 pentru a functiona la infinit/pana e oprit
-        1 pentru ca asa trebuie(nu au terminat cei de la mosquitto de implementat)
-    */
-	mosquitto_loop_forever(mosq, -1, 1);
+
+	/* Run the network loop in a background thread, this call returns quickly. */
+	rc = mosquitto_loop_start(mosq);
+	if(rc != MOSQ_ERR_SUCCESS){
+		mosquitto_destroy(mosq);
+		fprintf(stderr, "Error: %s\n", mosquitto_strerror(rc));
+		return;
+	}
+
+	/* At this point the client is connected to the network socket, but may not
+	 * have completed CONNECT/CONNACK.
+	 * It is fairly safe to start queuing messages at this point, but if you
+	 * want to be really sure you should wait until after a successful call to
+	 * the connect callback.
+	 * In this case we know it is 1 second before we start publishing.
+	 */
+	while(1){
+		publish_sensor_data(mosq);
+	}
 
 	mosquitto_lib_cleanup();
 }

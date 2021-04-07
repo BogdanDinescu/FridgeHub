@@ -21,7 +21,12 @@ public:
         // Server routes are loaded up
         setupRoutes();
     }
-
+    
+    /*static Fridge getFridge()
+    {
+        return fridge;
+    }*/
+    
     // Server is started threaded.  
     void start() {
         httpEndpoint->setHandler(router.handler());
