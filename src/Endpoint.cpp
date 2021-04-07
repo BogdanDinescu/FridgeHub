@@ -2,6 +2,9 @@
 #include "Fridge.h"
 #include "JsonClass.h"
 #include <pistache/endpoint.h>
+#include "temp.h"
+
+int tempGlobal;
 
 using namespace Pistache;
 
@@ -22,10 +25,10 @@ public:
         setupRoutes();
     }
     
-    /*static Fridge getFridge()
+    Fridge getFridge()
     {
         return fridge;
-    }*/
+    }
     
     // Server is started threaded.  
     void start() {
@@ -56,6 +59,7 @@ private:
     void setTemp(const Rest::Request& request, Http::ResponseWriter response) {
         int value = request.param(":value").as<int>();
         fridge.setTemp(value);
+        tempGlobal = value;
         response.send(Http::Code::Ok,  "Temp was set to " + request.param(":value").as<std::string>());
     }
 

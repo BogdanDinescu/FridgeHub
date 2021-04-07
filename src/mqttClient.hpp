@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+#include "temp.h"
 
 
 /* Callback called when the client receives a CONNACK message from the broker. */
@@ -39,7 +40,7 @@ void on_publish(struct mosquitto *mosq, void *obj, int mid)
 int get_temperature(void)
 {
 	sleep(1); /* Prevent a storm of messages - this pretend sensor works at 1Hz */
-	return 5;//fridge.getTemp();
+	return tempGlobal;//fridge.getTemp();
 }
 
 /* This function pretends to read some data from a sensor and publish it.*/
