@@ -38,3 +38,9 @@ $ sudo apt-get install mosquitto-clients
 ```
 g++ main.cpp JsonClass.cpp Fridge.cpp Item.cpp -ljsoncpp -lpistache -lpthread -lmosquitto -o main
 ```
+
+- Mosquitto sub/pub
+```
+mosquitto_pub -h test.mosquitto.org -t 'fridgeHub/temperature' -m <value>
+mosquitto_sub -h test.mosquitto.org -t 'fridgeHub/temperature'
+```
