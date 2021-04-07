@@ -31,6 +31,7 @@ $ sudo apt-get install libjsoncpp-dev
 ```
 $ sudo apt-get install libmosquitto-dev
 $ sudo apt-get install mosquitto
+$ sudo apt-get install mosquitto-client
 ```
 
 - Compile 
