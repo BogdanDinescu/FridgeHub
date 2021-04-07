@@ -14,6 +14,7 @@ public:
         : httpEndpoint(std::make_shared<Http::Endpoint>(addr))
     {
         fridge.loadItems("../Inventory.json");
+        fridge.setTemp(0);
     }
 
     // Initialization of the server. Additional options can be provided here
@@ -43,7 +44,6 @@ public:
 private:
     void setupRoutes() {
         using namespace Rest;
-        //Rest::Routes::Get(router, "/auth", Routes::bind(&MicrowaveEndpoint::doAuth, this));
         Routes::Post(router, "/settings/temp/:value", Routes::bind(&Endpoint::setTemp, this));
         Routes::Get(router, "/settings/temp", Routes::bind(&Endpoint::getTemp, this));
         Routes::Post(router, "/items/add", Routes::bind(&Endpoint::addItem, this));
