@@ -36,7 +36,7 @@ $ sudo apt-get install mosquitto-clients
 
 - Compile 
 ```
-g++ main.cpp JsonClass.cpp Fridge.cpp Item.cpp -ljsoncpp -lpistache -lpthread -lmosquitto -o main
+g++ main.cpp JsonClass.cpp Fridge.cpp Item.cpp EndpointClass.cpp -ljsoncpp -lpistache -lpthread -lmosquitto -o main
 ```
 
 - Mosquitto sub/pub
