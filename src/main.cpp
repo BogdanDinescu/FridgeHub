@@ -5,7 +5,7 @@
 #include "EndpointClass.hpp"
 #include "mqttClient.hpp"
 
-/* g++ main.cpp JsonClass.cpp Fridge.cpp Item.cpp -ljsoncpp -lpistache -lpthread -lmosquitto -o main
+/* g++ main.cpp JsonClass.cpp Fridge.cpp Item.cpp EndpointClass.cpp -ljsoncpp -lpistache -lpthread -lmosquitto -o main
  * mosquitto_pub -h test.mosquitto.org -t 'fridgeHub/temperature' -m -60
  * mosquitto_sub -h test.mosquitto.org -t 'fridgeHub/temperature' */
 
