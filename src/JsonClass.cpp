@@ -1,6 +1,6 @@
 #include <iostream>
 #include <fstream>
-#include "JsonClass.h"
+#include "JsonClass.hpp"
 
 JsonClass::JsonClass(){}
 

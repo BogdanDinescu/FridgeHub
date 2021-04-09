@@ -1,14 +1,13 @@
 #include <iostream>
 #include <signal.h>
 #include <thread>
-#include "JsonClass.h"
-#include "Endpoint.cpp"
+#include "JsonClass.hpp"
+#include "EndpointClass.hpp"
 #include "mqttClient.hpp"
 
-// g++ main.cpp JsonClass.cpp Fridge.cpp Item.cpp -ljsoncpp -lpistache -lpthread -lmosquitto -o main
-// mosquitto_pub -h test.mosquitto.org -t 'fridgeHub/temperature' -m -60
-// mosquitto_sub -h test.mosquitto.org -t 'fridgeHub/temperature'
-
+/* g++ main.cpp JsonClass.cpp Fridge.cpp Item.cpp -ljsoncpp -lpistache -lpthread -lmosquitto -o main
+ * mosquitto_pub -h test.mosquitto.org -t 'fridgeHub/temperature' -m -60
+ * mosquitto_sub -h test.mosquitto.org -t 'fridgeHub/temperature' */
 
 /*
     {
@@ -47,7 +46,7 @@ void pistache_thread(int argc, char** argv)
     std::cout << "Using " << thr << " threads" << std::endl;
 
     // Instance of the class that defines what the server can do.
-    Endpoint stats(addr);
+    EndpointClass stats(addr);
 
     // Initialize and start the server
     stats.init(thr);
@@ -110,13 +109,6 @@ void mosquitto_thread(int argc, char** argv)
 		return;
 	}
 
-	/* At this point the client is connected to the network socket, but may not
-	 * have completed CONNECT/CONNACK.
-	 * It is fairly safe to start queuing messages at this point, but if you
-	 * want to be really sure you should wait until after a successful call to
-	 * the connect callback.
-	 * In this case we know it is 1 second before we start publishing.
-	 */
 	while(1){
 		publish_sensor_data(mosq);
 	}

@@ -3,8 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
-#include "temp.h"
-
+#include "temp.hpp"
 
 /* Callback called when the client receives a CONNACK message from the broker. */
 void on_connect(struct mosquitto *mosq, void *obj, int reason_code)
@@ -20,41 +19,31 @@ void on_connect(struct mosquitto *mosq, void *obj, int reason_code)
 		 * will attempt to reconnect. */
 		mosquitto_disconnect(mosq);
 	}
-
-	/* You may wish to set a flag here to indicate to your application that the
-	 * client is now connected. */
 }
 
-
-/* Callback called when the client knows to the best of its abilities that a
- * PUBLISH has been successfully sent. For QoS 0 this means the message has
- * been completely written to the operating system. For QoS 1 this means we
- * have received a PUBACK from the broker. For QoS 2 this means we have
- * received a PUBCOMP from the broker. */
 void on_publish(struct mosquitto *mosq, void *obj, int mid)
 {
 	//printf("Message with mid %d has been published.\n", mid);
 }
 
-
-int get_temperature(void)
+float get_temperature(void)
 {
 	sleep(1); /* Prevent a storm of messages - this pretend sensor works at 1Hz */
-	return tempGlobal;//fridge.getTemp();
+	return tempGlobal;  // este temperatura din fridge.getTemp();
 }
 
 /* This function pretends to read some data from a sensor and publish it.*/
 void publish_sensor_data(struct mosquitto *mosq)
 {
 	char payload[20];
-	int temp;
+	float temp;
 	int rc;
 
 	/* Get our pretend data */
 	temp = get_temperature();
 	/* Print it to a string for easy human reading - payload format is highly
 	 * application dependent. */
-	snprintf(payload, sizeof(payload), "%d", temp);
+	snprintf(payload, sizeof(payload), "%f", temp);
 
 	/* Publish the message
 	 * mosq - our client instance

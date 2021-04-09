@@ -1,15 +1,15 @@
 #include <iostream>
 #include <list>
-#include "Item.h"
-#include "JsonClass.h"
+#include "Item.hpp"
+#include "JsonClass.hpp"
 
 class Fridge {
 public:
     Fridge();
     ~Fridge();
     
-    int getTemp();
-    void setTemp(int);
+    float getTemp();
+    void setTemp(float);
     
     void addItem(Item);
     void loadItems(std::string);
@@ -25,7 +25,7 @@ public:
     float calculateCalories(Json::Value);
     float getTotalCalories();
 private:
-    int temp;
+    float temp;
     std::list<Item> items;
     Item* getItem(std::string);
 };

@@ -1,4 +1,4 @@
-#include "Fridge.h"
+#include "Fridge.hpp"
 #include <list>
 #include <time.h>
 
@@ -8,12 +8,12 @@ Fridge::Fridge()
 
 Fridge::~Fridge(){}
 
-int Fridge::getTemp() 
+float Fridge::getTemp() 
 {
     return temp;
 }
 
-void Fridge::setTemp(int t) 
+void Fridge::setTemp(float t) 
 {
     this->temp = t;
 }

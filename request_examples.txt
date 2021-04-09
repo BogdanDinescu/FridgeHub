@@ -27,3 +27,4 @@ Post: http://localhost:8080/items/calories
 
 getTotalCalories   (calculeaza numarul de calorii al cantitatii de produse care nu au expirat)
 Get: http://localhost:8080/totalCalories
+
