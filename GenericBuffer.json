@@ -1,77 +1,143 @@
 {
-    "device-name": "Alex Android",
+    "device-name": "FridgeHub Android",
     "device-type": "Fridge",
-    "buffers-count": 5,
-    "input-buffers":{
+    "buffers-count": 6,
+    "input-buffers": {
         "1":{
-            "token-delimitators": "", //Symbol that separates the tokens in the buffer
-            "protocol": "HTTP", // The protocol used to communicate with this buffer
-            "prefix": "http://192.168.0.112:8080/", // The buffer requires that it is initialized with this content
-            "buffer-tokens":[// Description of each of the tokens that this buffer can receive. Think of them as the message's variables.
+            "token-delimitators": "",
+            "protocol": "HTTP",
+            "prefix": "http://localhost:8080/",
+            "buffer-tokens":[
             {
-                "name":"Insert item",
-                "description":"Insereaza un produs in frigider",
-                "token-type":"string", // What type of token should be fuzzed in this position of the buffer
-                "byte-size":256, //Maximum size of the token
-                "regex-rule": "[a-zA-Z]*", // Optional parameter to guide fuzzer generator
-                "optional": false // Can the fuzzer give a null value on this token?
-            },
-            {
-                "name":"Camera parameter",
-                "description": "Parameters for the command chosen",
-                "token-type":"string",
-                "byte-size":256,
-                "regex-rule": "=[a-zA-Z0-9]*",
-                "optional": true
+                "name": "settings/temp/",
+                "description": "Seteaza temperatura frigiderului",
+                "token-type": "number",
+                "byte-size": 4,
+                "regex-rule": "[+-]?([0-9]*[.])?[0-9]+",
+                "optional": "false"
+                
             }
             ]
         },
-
-       // So basically above, we actually have a generic way of telling the fuzzer that it is going to fuzz
-    // a HTTP Get request, with one parameter. The buffer tokens described could very well fit any
-    // type of system that takes input through the HTTP protocol. How would a buffer that takes a string
-    // and a Base64 image as input through SSH?
-
-        "2":{
-            "token-delimitators": " ",
-            "protocol": "SSH",
-            "prefix": "ssh user@192.168.0.112 -p securePass",
+        "2": {
+            "token-delimitators": "",
+            "protocol": "HTTP",
+            "prefix": "http://localhost:8080/",
             "buffer-tokens":[
-                {
-                    "name": "Program command",
-                    "description": "Program that is to be used",
-                    "token-type": "string",
-                    "byte-size":256,
-                    "regex-rule": "[a-z]*",
-                    "optional": "false",
-                },
-                {
-                    "name": "Image",
-                    "description": "A Base64 image",
-                    "token-type": "Base64",
-                    "byte-size":256,
-                    "regex-rule": "[^-A-Za-z0-9+/=]|=[^=]|={3,}$", // Stackoverflow approved
-                    "optional": false
-                }
+            {
+                "name": "items/remove/",
+                "description": "Sterge un produs",
+                "token-type": "string",
+                "byte-size": 256,
+                "regex-rule": "[a-zA-Z]",
+                "optional": "true"
+                
+            }
             ]
-        }
+        },
+        "3": {
+            "token-delimitators": "",
+            "protocol": "HTTP",
+            "prefix": "http://localhost:8080/",
+            "buffer-tokens":[
+            {
+                "name": "items/add/",
+                "description": "Adauga un produs in frigider",
+                "token-type": "json",
+                "byte-size": 256,
+                "regex-rule": "[ \t\n]*?{[ \t\n]*?\"name\" ?: ?\"[a-zA-Z]*\",[ \t\n]*?\"itemExpDate\" ?: ?\"[0-9]*\/[0-9]*\/[0-9]*\",[ \t\n]*?\"weight\" ?: ? ([0-9]*[.])?[0-9]+,[ \t\n]*?\"calories\" ?: ?[0-9]*[ \t\n]*}",
+                "optional": "false"
+                
+            },
+            {
+                "name": "update",
+                "description": "Trimite un json cu un produs si il modifica daca exista",
+                "token-type": "json",
+                "byte-size": 256,
+                "regex-rule": "[ \t\n]*?{[ \t\n]*?\"name\" ?: ?\"[a-zA-Z]*\",[ \t\n]*?\"itemExpDate\" ?: ?\"[0-9]*\/[0-9]*\/[0-9]*\",[ \t\n]*?\"weight\" ?: ? ([0-9]*[.])?[0-9]+,[ \t\n]*?\"calories\" ?: ?[0-9]*[ \t\n]*}",
+                "optional": "false"
+                
+            },
+            {
+                "name": "calories",
+                "description": "calculeaza caloriile pentru o anumita cantitate a unor produse date in body ca json",
+                "token-type": "json",
+                "byte-size": 256,
+                "regex-rule": "\[[ \t\n]*?{[ \t\n]*?\"name\" ?: ?\"[a-zA-Z]*\",[ \t\n]*?\"weight\" ?: ? ([0-9]*[.])?[0-9]+[ \t\n]*?}[ \t\n]*?,?[ \t\n]*?\]",
+                "optional": "false"
+                
+            },
+            ]
+        },
     },
     "output-buffers":{
         "1":{
             "token-delimitators": " ",
             "protocol": "HTTP",
-            "prefix": "http://192.168.0.112:8080/", // The buffer requires that it is initialized with this content
-            "caller":"remote", // Remote or Local. The caller variable describes who runs this buffer. Either
-			// your app sends the data (local), or the data is requested by another device (remote)
+            "prefix": "http://localhost:8080/",
+            "caller":"remote",
             "buffer-tokens":[
             {
-                "name":"Get image",
-                "description":"Command that returns an image",
-                "token-type":"string", // What type of token should be fuzzed in this position of the buffer
-                "byte-size":256,
-                "regex-rule": "/image", // Optional parameter to guide fuzzer generator
-                "optional": false // Can the fuzzer give a null value on this token?
+                "name": "temp",
+                "description": "Obtine temperatura frigiderului",
+                "token-type": "string",
+                "byte-size": 4,
+                "regex-rule": "[+-]?([0-9]*[.])?[0-9]+",
+                "optional": "false"
+                
             }
+            ]
+        },
+        "2": {
+            "token-delimitators": " ",
+            "protocol": "HTTP",
+            "prefix": "http://localhost:8080/",
+            "caller":"remote",
+            "buffer-tokens":[
+            {
+                "name": "items/",
+                "description": "Obtine un produs din frigider",
+                "token-type": "string",
+                "byte-size": 256,
+                "regex-rule": "[a-zA-Z]*",
+                "optional": "true"
+                
+            },
+            {
+                "name": "items/expired",
+                "description": "Obtine numele produselor care au expirat",
+                "token-type": "string",
+                "byte-size": 256,
+                "regex-rule": "[[a-zA-Z]*[ ]*?,[ ]?]*[a-zA-Z]*",
+                "optional": "false"
+                
+            },
+            {
+                "name": "items/getAll",
+                "description": "Intoarce toate numele produselor din frigider",
+                "token-type": "string",
+                "byte-size": 256,
+                "regex-rule": "[[a-zA-Z]*[ ]*?,[ ]?]*[a-zA-Z]*",
+                "optional": "false"
+                
+            }
+            ]
+        },
+        "3": {
+            "token-delimitators": " ",
+            "protocol": "HTTP",
+            "prefix": "http://localhost:8080/",
+            "caller":"remote",
+            "buffer-tokens":[
+            {
+                "name": "totalCalories",
+                "description": "calculeaza numarul de calorii al cantitatii de produse care nu au expirat",
+                "token-type": "number",
+                "byte-size": 4,
+                "regex-rule": "[0-9]*",
+                "optional": "false"
+                
+            },
             ]
         }
     }
