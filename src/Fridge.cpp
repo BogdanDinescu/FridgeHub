@@ -8,6 +8,16 @@ Fridge::Fridge()
 
 Fridge::~Fridge(){}
 
+std::vector<std::string> Fridge::getAudit()
+{
+    return audit;
+}
+
+void Fridge::setAudit(std::vector<std::string> audit)
+{
+    this->audit = audit;
+}
+
 float Fridge::getTemp() 
 {
     return temp;
@@ -185,4 +195,15 @@ float Fridge::getTotalCalories()
     }
 
     return total;
+}
+
+std::string Fridge::concatenateString()
+{
+    std::string res = "";
+    for(auto s:audit)
+    {
+        res += (s + '\n');
+    }
+    res.pop_back();
+    return res;
 }

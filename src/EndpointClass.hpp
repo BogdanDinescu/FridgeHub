@@ -26,6 +26,7 @@ private:
 	void updateItem(const Rest::Request& request, Http::ResponseWriter response);
 	void calories(const Rest::Request& request, Http::ResponseWriter response);
     void getTotalCalories(const Rest::Request& request, Http::ResponseWriter response);
+	void getAudit(const Rest::Request& request, Http::ResponseWriter response);
 
 	Fridge fridge;
     std::shared_ptr<Http::Endpoint> httpEndpoint;

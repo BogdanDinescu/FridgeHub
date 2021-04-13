@@ -8,6 +8,9 @@ public:
     Fridge();
     ~Fridge();
     
+    std::vector<std::string> getAudit();
+    void setAudit(std::vector<std::string> audit);
+
     float getTemp();
     void setTemp(float);
     
@@ -21,6 +24,7 @@ public:
     std::string getItemAsString(std::string);
     std::string getExpiredItems();
     bool updateItem(std::string, float);
+    std::string concatenateString();
     
     float calculateCalories(Json::Value);
     float getTotalCalories();
@@ -28,4 +32,5 @@ private:
     float temp;
     std::list<Item> items;
     Item* getItem(std::string);
+    std::vector<std::string> audit;
 };

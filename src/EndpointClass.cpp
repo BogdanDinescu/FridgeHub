@@ -49,6 +49,7 @@ void EndpointClass::setupRoutes()
     Routes::Put(router, "/update", Routes::bind(&EndpointClass::updateItem, this));
     Routes::Post(router, "/items/calories", Routes::bind(&EndpointClass::calories, this));
     Routes::Get(router, "/totalCalories", Routes::bind(&EndpointClass::getTotalCalories, this));
+    Routes::Get(router, "/getAudit", Routes::bind(&EndpointClass::getAudit, this));
 }
 
 /* Functia primeste ca parametru un string care este parsat ca float, 
@@ -56,6 +57,10 @@ void EndpointClass::setupRoutes()
  * ea va fi setata ca temperatura noua altfel se va trimite un mesaj conform 
  * caruia temperatura trimisa este gresita */
 void EndpointClass::setTemp(const Rest::Request& request, Http::ResponseWriter response) {
+    auto audit = fridge.getAudit();
+    audit.push_back("Set temperature");
+    fridge.setAudit(audit);
+    
     float value = request.param(":value").as<float>();
     
     if (value >= 1 && value <= 4)
@@ -70,6 +75,10 @@ void EndpointClass::setTemp(const Rest::Request& request, Http::ResponseWriter r
 
 /* Functia trimite un raspuns care contine valoarea temperaturii din frigider */
 void EndpointClass::getTemp(const Rest::Request& request, Http::ResponseWriter response) {
+    auto audit = fridge.getAudit();
+    audit.push_back("Get temperature");
+    fridge.setAudit(audit);
+    
     using namespace Http;
     float value = fridge.getTemp();
     std::string s_value = std::to_string(value);
@@ -82,6 +91,10 @@ void EndpointClass::getTemp(const Rest::Request& request, Http::ResponseWriter r
 
 /* Functia parseaza datele primite ca string Json si le va introduce in fridge */
 void EndpointClass::addItem(const Rest::Request& request, Http::ResponseWriter response) {
+    auto audit = fridge.getAudit();
+    audit.push_back("Add item");
+    fridge.setAudit(audit);
+    
     JsonClass json;
     Json::Value root = json.parseString(request.body());
     ItemDate date;
@@ -97,6 +110,10 @@ void EndpointClass::addItem(const Rest::Request& request, Http::ResponseWriter r
 /* Functia trimite un raspuns care contine datele produsului cerut altfel un string
  * cu mesajul ca nu s-a gasit produsul */
 void EndpointClass::getItem(const Rest::Request& request, Http::ResponseWriter response) {
+    auto audit = fridge.getAudit();
+    audit.push_back("Get specific item");
+    fridge.setAudit(audit);
+    
     using namespace Http;
     std::string name = request.param(":name").as<std::string>();
     std::string value = fridge.getItemAsString(name);
@@ -110,6 +127,10 @@ void EndpointClass::getItem(const Rest::Request& request, Http::ResponseWriter r
 /* functie care intoarce numele itemelor care au expirat */
 void EndpointClass::getExpired(const Rest::Request& request, Http::ResponseWriter response)
 {
+    auto audit = fridge.getAudit();
+    audit.push_back("Get expired items");
+    fridge.setAudit(audit);
+
     using namespace Http;
     std::string value = fridge.getExpiredItems();
     response.headers()
@@ -124,6 +145,10 @@ void EndpointClass::getExpired(const Rest::Request& request, Http::ResponseWrite
 /* functie care trimite toate itemele */
 void EndpointClass::getItems(const Rest::Request& request, Http::ResponseWriter response)
 {
+    auto audit = fridge.getAudit();
+    audit.push_back("Get items");
+    fridge.setAudit(audit);
+
     using namespace Http;
     std::string value = fridge.getItemsAsString();
 
@@ -136,6 +161,10 @@ void EndpointClass::getItems(const Rest::Request& request, Http::ResponseWriter 
 
 /* Functia sterge un produs folosind numele acestuia dat ca parametru in request body */
 void EndpointClass::removeItem(const Rest::Request& request, Http::ResponseWriter response) {
+    auto audit = fridge.getAudit();
+    audit.push_back("Remove item");
+    fridge.setAudit(audit);
+
     JsonClass json;
     Json::Value root = json.parseString(request.body());
 
@@ -148,6 +177,10 @@ void EndpointClass::removeItem(const Rest::Request& request, Http::ResponseWrite
 /* functia primeste un json cu un item si modifica caloriile si cantitatea de produs daca exista */
 void EndpointClass::updateItem(const Rest::Request& request, Http::ResponseWriter response)
 {
+    auto audit = fridge.getAudit();
+    audit.push_back("Update item");
+    fridge.setAudit(audit);
+
     JsonClass json;
     Json::Value root = json.parseString(request.body());
 
@@ -163,6 +196,10 @@ void EndpointClass::updateItem(const Rest::Request& request, Http::ResponseWrite
 
 /* Functia calculeaza caloriile pentru o cantitate si un nume de produs date in body-ul requestului */
 void EndpointClass::calories(const Rest::Request& request, Http::ResponseWriter response) {
+    auto audit = fridge.getAudit();
+    audit.push_back("Get calories for specific product");
+    fridge.setAudit(audit);
+    
     JsonClass json;
     Json::Value root = json.parseString(request.body());
 
@@ -174,7 +211,18 @@ void EndpointClass::calories(const Rest::Request& request, Http::ResponseWriter 
 /* Functia trimite un raspuns care contine numarul total de calorii al produselor care nu au expirat
  * din frigider. */
 void EndpointClass::getTotalCalories(const Rest::Request& request, Http::ResponseWriter response) {
+    auto audit = fridge.getAudit();
+    audit.push_back("Get total calories");
+    fridge.setAudit(audit);
+
     float total_calories = fridge.getTotalCalories();
 
     response.send(Http::Code::Ok, std::to_string(total_calories));
+}
+
+void EndpointClass::getAudit(const Rest::Request& request, Http::ResponseWriter response) {
+
+    std::string res = fridge.concatenateString();
+
+    response.send(Http::Code::Ok, res);
 }
