@@ -57,8 +57,11 @@ void EndpointClass::setupRoutes()
  * ea va fi setata ca temperatura noua altfel se va trimite un mesaj conform 
  * caruia temperatura trimisa este gresita */
 void EndpointClass::setTemp(const Rest::Request& request, Http::ResponseWriter response) {
+    time_t theTime = time(NULL);
+    struct tm *aTime = localtime(&theTime);
+
     auto audit = fridge.getAudit();
-    audit.push_back("Set temperature");
+    audit.push_back("Set temperature " + std::to_string(aTime->tm_hour) + ":" + std::to_string(aTime->tm_min) + ":" + std::to_string(aTime->tm_sec));
     fridge.setAudit(audit);
     
     float value = request.param(":value").as<float>();
@@ -75,8 +78,11 @@ void EndpointClass::setTemp(const Rest::Request& request, Http::ResponseWriter r
 
 /* Functia trimite un raspuns care contine valoarea temperaturii din frigider */
 void EndpointClass::getTemp(const Rest::Request& request, Http::ResponseWriter response) {
+    time_t theTime = time(NULL);
+    struct tm *aTime = localtime(&theTime);
+
     auto audit = fridge.getAudit();
-    audit.push_back("Get temperature");
+    audit.push_back("Get temperature " + std::to_string(aTime->tm_hour) + ":" + std::to_string(aTime->tm_min) + ":" + std::to_string(aTime->tm_sec));
     fridge.setAudit(audit);
     
     using namespace Http;
@@ -91,8 +97,11 @@ void EndpointClass::getTemp(const Rest::Request& request, Http::ResponseWriter r
 
 /* Functia parseaza datele primite ca string Json si le va introduce in fridge */
 void EndpointClass::addItem(const Rest::Request& request, Http::ResponseWriter response) {
+    time_t theTime = time(NULL);
+    struct tm *aTime = localtime(&theTime);
+
     auto audit = fridge.getAudit();
-    audit.push_back("Add item");
+    audit.push_back("Add item " + std::to_string(aTime->tm_hour) + ":" + std::to_string(aTime->tm_min) + ":" + std::to_string(aTime->tm_sec));
     fridge.setAudit(audit);
     
     JsonClass json;
@@ -110,8 +119,11 @@ void EndpointClass::addItem(const Rest::Request& request, Http::ResponseWriter r
 /* Functia trimite un raspuns care contine datele produsului cerut altfel un string
  * cu mesajul ca nu s-a gasit produsul */
 void EndpointClass::getItem(const Rest::Request& request, Http::ResponseWriter response) {
+    time_t theTime = time(NULL);
+    struct tm *aTime = localtime(&theTime);
+
     auto audit = fridge.getAudit();
-    audit.push_back("Get specific item");
+    audit.push_back("Get specific item " + std::to_string(aTime->tm_hour) + ":" + std::to_string(aTime->tm_min) + ":" + std::to_string(aTime->tm_sec));
     fridge.setAudit(audit);
     
     using namespace Http;
@@ -127,8 +139,11 @@ void EndpointClass::getItem(const Rest::Request& request, Http::ResponseWriter r
 /* functie care intoarce numele itemelor care au expirat */
 void EndpointClass::getExpired(const Rest::Request& request, Http::ResponseWriter response)
 {
+    time_t theTime = time(NULL);
+    struct tm *aTime = localtime(&theTime);
+    
     auto audit = fridge.getAudit();
-    audit.push_back("Get expired items");
+    audit.push_back("Get expired items " + std::to_string(aTime->tm_hour) + ":" + std::to_string(aTime->tm_min) + ":" + std::to_string(aTime->tm_sec));
     fridge.setAudit(audit);
 
     using namespace Http;
@@ -145,8 +160,11 @@ void EndpointClass::getExpired(const Rest::Request& request, Http::ResponseWrite
 /* functie care trimite toate itemele */
 void EndpointClass::getItems(const Rest::Request& request, Http::ResponseWriter response)
 {
+    time_t theTime = time(NULL);
+    struct tm *aTime = localtime(&theTime);
+    
     auto audit = fridge.getAudit();
-    audit.push_back("Get items");
+    audit.push_back("Get items " + std::to_string(aTime->tm_hour) + ":" + std::to_string(aTime->tm_min) + ":" + std::to_string(aTime->tm_sec));
     fridge.setAudit(audit);
 
     using namespace Http;
@@ -161,8 +179,11 @@ void EndpointClass::getItems(const Rest::Request& request, Http::ResponseWriter 
 
 /* Functia sterge un produs folosind numele acestuia dat ca parametru in request body */
 void EndpointClass::removeItem(const Rest::Request& request, Http::ResponseWriter response) {
+    time_t theTime = time(NULL);
+    struct tm *aTime = localtime(&theTime);
+    
     auto audit = fridge.getAudit();
-    audit.push_back("Remove item");
+    audit.push_back("Remove item " + std::to_string(aTime->tm_hour) + ":" + std::to_string(aTime->tm_min) + ":" + std::to_string(aTime->tm_sec));
     fridge.setAudit(audit);
 
     JsonClass json;
@@ -177,8 +198,11 @@ void EndpointClass::removeItem(const Rest::Request& request, Http::ResponseWrite
 /* functia primeste un json cu un item si modifica caloriile si cantitatea de produs daca exista */
 void EndpointClass::updateItem(const Rest::Request& request, Http::ResponseWriter response)
 {
+    time_t theTime = time(NULL);
+    struct tm *aTime = localtime(&theTime);
+    
     auto audit = fridge.getAudit();
-    audit.push_back("Update item");
+    audit.push_back("Update item " + std::to_string(aTime->tm_hour) + ":" + std::to_string(aTime->tm_min) + ":" + std::to_string(aTime->tm_sec));
     fridge.setAudit(audit);
 
     JsonClass json;
@@ -196,8 +220,11 @@ void EndpointClass::updateItem(const Rest::Request& request, Http::ResponseWrite
 
 /* Functia calculeaza caloriile pentru o cantitate si un nume de produs date in body-ul requestului */
 void EndpointClass::calories(const Rest::Request& request, Http::ResponseWriter response) {
+    time_t theTime = time(NULL);
+    struct tm *aTime = localtime(&theTime);
+    
     auto audit = fridge.getAudit();
-    audit.push_back("Get calories for specific product");
+    audit.push_back("Get calories for specific product " + std::to_string(aTime->tm_hour) + ":" + std::to_string(aTime->tm_min) + ":" + std::to_string(aTime->tm_sec));
     fridge.setAudit(audit);
     
     JsonClass json;
@@ -211,8 +238,11 @@ void EndpointClass::calories(const Rest::Request& request, Http::ResponseWriter 
 /* Functia trimite un raspuns care contine numarul total de calorii al produselor care nu au expirat
  * din frigider. */
 void EndpointClass::getTotalCalories(const Rest::Request& request, Http::ResponseWriter response) {
+    time_t theTime = time(NULL);
+    struct tm *aTime = localtime(&theTime);
+    
     auto audit = fridge.getAudit();
-    audit.push_back("Get total calories");
+    audit.push_back("Get total calories " + std::to_string(aTime->tm_hour) + ":" + std::to_string(aTime->tm_min) + ":" + std::to_string(aTime->tm_sec));
     fridge.setAudit(audit);
 
     float total_calories = fridge.getTotalCalories();

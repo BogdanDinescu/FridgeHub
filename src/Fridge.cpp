@@ -200,6 +200,7 @@ float Fridge::getTotalCalories()
 std::string Fridge::concatenateString()
 {
     std::string res = "";
+    
     for(auto s:audit)
     {
         res += (s + '\n');
