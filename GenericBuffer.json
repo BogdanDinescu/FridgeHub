@@ -63,7 +63,7 @@
                 "description": "calculeaza caloriile pentru o anumita cantitate a unor produse date in body ca json",
                 "token-type": "json",
                 "byte-size": 256,
-                "regex-rule": "\[[ \t\n]*?{[ \t\n]*?\"name\" ?: ?\"[a-zA-Z]*\",[ \t\n]*?\"weight\" ?: ? ([0-9]*[.])?[0-9]+[ \t\n]*?}[ \t\n]*?,?[ \t\n]*?\]",
+                "regex-rule": "[[ \t\n]*?{[ \t\n]*?\"name\" ?: ?\"[a-zA-Z]*\",[ \t\n]*?\"weight\" ?: ? ([0-9]*[.])?[0-9]+[ \t\n]*?}[ \t\n]*?,?[ \t\n]*?]",
                 "optional": "false"
                 
             },
