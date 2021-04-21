@@ -65,6 +65,8 @@ void EndpointClass::setTemp(const Rest::Request& request, Http::ResponseWriter r
     audit.push_back("Set temperature " + std::to_string(aTime->tm_hour) + ":" + std::to_string(aTime->tm_min) + ":" + std::to_string(aTime->tm_sec));
     fridge.setAudit(audit);
     
+    appendAudit(audit);
+
     float value = request.param(":value").as<float>();
     
     if (value >= 1 && value <= 4)
@@ -86,6 +88,8 @@ void EndpointClass::getTemp(const Rest::Request& request, Http::ResponseWriter r
     audit.push_back("Get temperature " + std::to_string(aTime->tm_hour) + ":" + std::to_string(aTime->tm_min) + ":" + std::to_string(aTime->tm_sec));
     fridge.setAudit(audit);
     
+    appendAudit(audit);
+
     using namespace Http;
     float value = fridge.getTemp();
     std::string s_value = std::to_string(value);
@@ -105,6 +109,8 @@ void EndpointClass::addItem(const Rest::Request& request, Http::ResponseWriter r
     audit.push_back("Add item " + std::to_string(aTime->tm_hour) + ":" + std::to_string(aTime->tm_min) + ":" + std::to_string(aTime->tm_sec));
     fridge.setAudit(audit);
     
+    appendAudit(audit);
+
     JsonClass json;
     Json::Value root = json.parseString(request.body());
     ItemDate date;
@@ -127,6 +133,8 @@ void EndpointClass::getItem(const Rest::Request& request, Http::ResponseWriter r
     audit.push_back("Get specific item " + std::to_string(aTime->tm_hour) + ":" + std::to_string(aTime->tm_min) + ":" + std::to_string(aTime->tm_sec));
     fridge.setAudit(audit);
     
+    appendAudit(audit);
+
     using namespace Http;
     std::string name = request.param(":name").as<std::string>();
     std::string value = fridge.getItemAsString(name);
@@ -146,6 +154,8 @@ void EndpointClass::getExpired(const Rest::Request& request, Http::ResponseWrite
     auto audit = fridge.getAudit();
     audit.push_back("Get expired items " + std::to_string(aTime->tm_hour) + ":" + std::to_string(aTime->tm_min) + ":" + std::to_string(aTime->tm_sec));
     fridge.setAudit(audit);
+
+    appendAudit(audit);
 
     using namespace Http;
     std::string value = fridge.getExpiredItems();
@@ -168,6 +178,8 @@ void EndpointClass::getItems(const Rest::Request& request, Http::ResponseWriter 
     audit.push_back("Get items " + std::to_string(aTime->tm_hour) + ":" + std::to_string(aTime->tm_min) + ":" + std::to_string(aTime->tm_sec));
     fridge.setAudit(audit);
 
+    appendAudit(audit);
+
     using namespace Http;
     std::string value = fridge.getItemsAsString();
 
@@ -187,6 +199,8 @@ void EndpointClass::removeItem(const Rest::Request& request, Http::ResponseWrite
     audit.push_back("Remove item " + std::to_string(aTime->tm_hour) + ":" + std::to_string(aTime->tm_min) + ":" + std::to_string(aTime->tm_sec));
     fridge.setAudit(audit);
 
+    appendAudit(audit);
+
     JsonClass json;
     Json::Value root = json.parseString(request.body());
 
@@ -205,6 +219,8 @@ void EndpointClass::updateItem(const Rest::Request& request, Http::ResponseWrite
     auto audit = fridge.getAudit();
     audit.push_back("Update item " + std::to_string(aTime->tm_hour) + ":" + std::to_string(aTime->tm_min) + ":" + std::to_string(aTime->tm_sec));
     fridge.setAudit(audit);
+
+    appendAudit(audit);
 
     JsonClass json;
     Json::Value root = json.parseString(request.body());
@@ -228,6 +244,8 @@ void EndpointClass::calories(const Rest::Request& request, Http::ResponseWriter 
     audit.push_back("Get calories for specific product " + std::to_string(aTime->tm_hour) + ":" + std::to_string(aTime->tm_min) + ":" + std::to_string(aTime->tm_sec));
     fridge.setAudit(audit);
     
+    appendAudit(audit);
+
     JsonClass json;
     Json::Value root = json.parseString(request.body());
 
@@ -246,6 +264,8 @@ void EndpointClass::getTotalCalories(const Rest::Request& request, Http::Respons
     audit.push_back("Get total calories " + std::to_string(aTime->tm_hour) + ":" + std::to_string(aTime->tm_min) + ":" + std::to_string(aTime->tm_sec));
     fridge.setAudit(audit);
 
+    appendAudit(audit);
+
     float total_calories = fridge.getTotalCalories();
 
     response.send(Http::Code::Ok, std::to_string(total_calories));
@@ -255,10 +275,20 @@ void EndpointClass::getAudit(const Rest::Request& request, Http::ResponseWriter 
 {
     std::string res = fridge.concatenateString();
 
+    response.send(Http::Code::Ok, res);
+}
+
+void EndpointClass::appendAudit(std::vector<std::string> audits)
+{
     std::ofstream f;
     f.open("Audit_Fridge.log", std::ios_base::app);
-    f << res;
-    f.close();
 
-    response.send(Http::Code::Ok, res);
+    f << audits.back() << '\n';
+
+    // for (auto audit : audits) 
+    // {
+    //     f << audit << '\n';
+    // }
+
+    f.close();
 }
