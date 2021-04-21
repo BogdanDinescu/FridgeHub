@@ -1,5 +1,6 @@
 #include "EndpointClass.hpp"
 #include "temp.hpp"
+#include <fstream>
 
 float tempGlobal;
 
@@ -250,9 +251,14 @@ void EndpointClass::getTotalCalories(const Rest::Request& request, Http::Respons
     response.send(Http::Code::Ok, std::to_string(total_calories));
 }
 
-void EndpointClass::getAudit(const Rest::Request& request, Http::ResponseWriter response) {
-
+void EndpointClass::getAudit(const Rest::Request& request, Http::ResponseWriter response) 
+{
     std::string res = fridge.concatenateString();
+
+    std::ofstream f;
+    f.open("Audit_Fridge.log", std::ios_base::app);
+    f << res;
+    f.close();
 
     response.send(Http::Code::Ok, res);
 }

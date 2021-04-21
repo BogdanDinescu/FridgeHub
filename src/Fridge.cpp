@@ -205,6 +205,5 @@ std::string Fridge::concatenateString()
     {
         res += (s + '\n');
     }
-    res.pop_back();
     return res;
 }
