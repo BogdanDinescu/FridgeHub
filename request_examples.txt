@@ -1,31 +1,31 @@
-setTemp    (primeste un string pe care il face float si il atribuie variabilei temp din Fridge)
+setTemp    (primeste un string pe care il face float si il atribuie variabilei temp din Fridge)-
 Post: http://localhost:8080/settings/temp/:value  (:value = float)
 
-getTemp   (primeste temperatura care e string)
+getTemp   (primeste temperatura care e string)-
 Get: http://localhost:8080/settings/temp
 
-addItem   (trimite un json cu un item)
+addItem   (trimite un json cu un item)-
 Post: http://localhost:8080/items/add
 
-getItem   (intoarce pentru un nume(:name) un string cu toate elementele itemului)
+getItem   (intoarce pentru un nume(:name) un string cu toate elementele itemului)-
 Get: http://localhost:8080/items/:name
 
-getExpired   (intoarce numele itemelor care au expirat)
+getExpired   (intoarce numele itemelor care au expirat)-
 Get: http://localhost:8080/items/expired
 
-getItems   (intoarce un string cu toate numele de produs din fridge)
+getItems   (intoarce un string cu toate numele de produs din fridge)-
 Get: http://localhost:8080/items/getAll
 
-removeItem   (sterge un item din lista de iteme)
+removeItem   (sterge un item din lista de iteme)-
 Post: http://localhost:8080/items/remove
 
-updateItem   (este trimis un json cu un item si modifica un item din fridge daca exista)
+updateItem   (este trimis un json cu un item si modifica un item din fridge daca exista)-
 Put: http://localhost:8080/update
 
-calories   (calculeaza caloriile pentru o anumita cantitate a unor produse date in body ca json)
+calories   (calculeaza caloriile pentru o anumita cantitate a unor produse date in body ca json)-
 Post: http://localhost:8080/items/calories
 
-getTotalCalories   (calculeaza numarul de calorii al cantitatii de produse care nu au expirat)
+getTotalCalories   (calculeaza numarul de calorii al cantitatii de produse care nu au expirat)-
 Get: http://localhost:8080/totalCalories
 
 getAudit   (afiseaza registrul request-urilor apelate)

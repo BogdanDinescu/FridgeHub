@@ -1,142 +1,180 @@
 {
-    "device-name": "FridgeHub Android",
-    "device-type": "Fridge",
-    "buffers-count": 6,
-    "input-buffers": {
-        "1":{
-            "token-delimitators": "",
-            "protocol": "HTTP",
-            "prefix": "curl -X POST 'http://localhost:8080/settings/temp/'",
-            "buffer-tokens":[
-            {
-                "name": "Setarea temperaturii",
-                "description": "Seteaza temperatura frigiderului",
-                "token-type": "number",
-                "byte-size": 4,
-                "regex-rule": "[+-]?([0-9]*[.])?[0-9]+",
-                "optional": "false"
-            }
-            ]
-        },
-        "2": {
-            "token-delimitators": "",
-            "protocol": "HTTP",
-            "prefix": "curl -X POST 'http://localhost:8080/items/remove'",
-            "buffer-tokens":[
-            {
-                "name": "items/remove/",
-                "description": "Sterge un produs",
-                "token-type": "string",
-                "byte-size": 256,
-                "regex-rule": "[a-zA-Z]",
-                "optional": "true"
-            }
-            ]
-        },
-        "3": {
-            "token-delimitators": "",
-            "protocol": "HTTP",
-            "prefix": "curl -X POST 'http://localhost:8080/items/add/'",
-            "buffer-tokens":[
-            {
-                "name": "items/add/",
-                "description": "Adauga un produs in frigider",
-                "token-type": "json",
-                "byte-size": 256,
-                "regex-rule": "[ \t\n]*?{[ \t\n]*?\"name\" ?: ?\"[a-zA-Z]*\",[ \t\n]*?\"itemExpDate\" ?: ?\"[0-9]*\/[0-9]*\/[0-9]*\",[ \t\n]*?\"weight\" ?: ? ([0-9]*[.])?[0-9]+,[ \t\n]*?\"calories\" ?: ?[0-9]*[ \t\n]*}",
-                "optional": "false"
-            },
-            {
-                "name": "update",
-                "description": "Trimite un json cu un produs si il modifica daca exista",
-                "token-type": "json",
-                "byte-size": 256,
-                "regex-rule": "[ \t\n]*?{[ \t\n]*?\"name\" ?: ?\"[a-zA-Z]*\",[ \t\n]*?\"itemExpDate\" ?: ?\"[0-9]*\/[0-9]*\/[0-9]*\",[ \t\n]*?\"weight\" ?: ? ([0-9]*[.])?[0-9]+,[ \t\n]*?\"calories\" ?: ?[0-9]*[ \t\n]*}",
-                "optional": "false"
-            },
-            {
-                "name": "calories",
-                "description": "calculeaza caloriile pentru o anumita cantitate a unor produse date in body ca json",
-                "token-type": "json",
-                "byte-size": 256,
-                "regex-rule": "[[ \t\n]*?{[ \t\n]*?\"name\" ?: ?\"[a-zA-Z]*\",[ \t\n]*?\"weight\" ?: ? ([0-9]*[.])?[0-9]+[ \t\n]*?}[ \t\n]*?,?[ \t\n]*?]",
-                "optional": "false"
-            }
-            ]
-        },
-    },
-    "output-buffers":{
-        "1":{
-            "token-delimitators": " ",
-            "protocol": "HTTP",
-            "prefix": "http://localhost:8080/",
-            "caller":"remote",
-            "buffer-tokens":[
-            {
-                "name": "temp",
-                "description": "Obtine temperatura frigiderului",
-                "token-type": "string",
-                "byte-size": 4,
-                "regex-rule": "[+-]?([0-9]*[.])?[0-9]+",
-                "optional": "false"
-                
-            }
-            ]
-        },
-        "2": {
-            "token-delimitators": " ",
-            "protocol": "HTTP",
-            "prefix": "http://localhost:8080/",
-            "caller":"remote",
-            "buffer-tokens":[
-            {
-                "name": "items/",
-                "description": "Obtine un produs din frigider",
-                "token-type": "string",
-                "byte-size": 256,
-                "regex-rule": "[a-zA-Z]*",
-                "optional": "true"
-                
-            },
-            {
-                "name": "items/expired",
-                "description": "Obtine numele produselor care au expirat",
-                "token-type": "string",
-                "byte-size": 256,
-                "regex-rule": "[[a-zA-Z]*[ ]*?,[ ]?]*[a-zA-Z]*",
-                "optional": "false"
-                
-            },
-            {
-                "name": "items/getAll",
-                "description": "Intoarce toate numele produselor din frigider",
-                "token-type": "string",
-                "byte-size": 256,
-                "regex-rule": "[[a-zA-Z]*[ ]*?,[ ]?]*[a-zA-Z]*",
-                "optional": "false"
-                
-            }
-            ]
-        },
-        "3": {
-            "token-delimitators": " ",
-            "protocol": "HTTP",
-            "prefix": "http://localhost:8080/",
-            "caller":"remote",
-            "buffer-tokens":[
-            {
-                "name": "totalCalories",
-                "description": "calculeaza numarul de calorii al cantitatii de produse care nu au expirat",
-                "token-type": "number",
-                "byte-size": 4,
-                "regex-rule": "[0-9]*",
-                "optional": "false"
-            },
-            ]
+  "device-name": "FridgeHub Android",
+  "device-type": "Fridge",
+  "buffers-count": 11,
+  "input-buffers": {
+    "1": {
+      "token-delimitators": "",
+      "protocol": "HTTP",
+      "prefix": "curl -X POST 'http://localhost:8080/settings/temp/'",
+      "buffer-tokens": [
+        {
+          "name": "setTemp",
+          "description": "Seteaza temperatura frigiderului",
+          "token-type": "number",
+          "byte-size": 4,
+          "regex-rule": "[+-]?([0-9]*[.])?[0-9]+",
+          "optional": "false"
         }
+      ]
+    },
+    "2": {
+      "token-delimitators": "",
+      "protocol": "HTTP",
+      "prefix": "curl -X POST 'http://localhost:8080/items/remove/'",
+      "buffer-tokens": [
+        {
+          "name": "removeItem",
+          "description": "Sterge un produs",
+          "token-type": "string",
+          "byte-size": 256,
+          "regex-rule": "[a-zA-Z]",
+          "optional": "false"
+        }
+      ]
+    },
+    "3": {
+      "token-delimitators": "",
+      "protocol": "HTTP",
+      "prefix": "curl -X POST 'http://localhost:8080/items/add/'",
+      "buffer-tokens": [
+        {
+          "name": "addItem",
+          "description": "Adauga un produs in frigider",
+          "token-type": "json",
+          "byte-size": 256,
+          "regex-rule": "[ \t\n]*?{[ \t\n]*?\"name\" ?: ?\"[a-zA-Z]*\",[ \t\n]*?\"itemExpDate\" ?: ?\"[0-9]*/[0-9]*/[0-9]*\",[ \t\n]*?\"weight\" ?: ? ([0-9]*[.])?[0-9]+,[ \t\n]*?\"calories\" ?: ?[0-9]*[ \t\n]*}",
+          "optional": "false"
+        }
+      ]
+    },
+    "4": {
+      "token-delimitators": "",
+      "protocol": "HTTP",
+      "prefix": "curl -X PUT 'http://localhost:8080/update/'",
+      "buffer-tokens": [
+        {
+          "name": "updateItem",
+          "description": "Trimite un json cu un produs si il modifica daca exista",
+          "token-type": "json",
+          "byte-size": 256,
+          "regex-rule": "[ \t\n]*?{[ \t\n]*?\"name\" ?: ?\"[a-zA-Z]*\",[ \t\n]*?\"itemExpDate\" ?: ?\"[0-9]*/[0-9]*/[0-9]*\",[ \t\n]*?\"weight\" ?: ? ([0-9]*[.])?[0-9]+,[ \t\n]*?\"calories\" ?: ?[0-9]*[ \t\n]*}",
+          "optional": "false"
+        }
+      ]
+    },
+    "5": {
+      "token-delimitators": "",
+      "protocol": "HTTP",
+      "prefix": "curl -X POST 'http://localhost:8080/calories/'",
+      "buffer-tokens": [
+        {
+          "name": "calories",
+          "description": "calculeaza caloriile pentru o anumita cantitate a unor produse date in body ca json",
+          "token-type": "json",
+          "byte-size": 256,
+          "regex-rule": "[[ \t\n]*?{[ \t\n]*?\"name\" ?: ?\"[a-zA-Z]*\",[ \t\n]*?\"weight\" ?: ? ([0-9]*[.])?[0-9]+[ \t\n]*?}[ \t\n]*?,?[ \t\n]*?]",
+          "optional": "false"
+        }
+      ]
     }
+  },
+  "output-buffers": {
+    "1": {
+      "token-delimitators": "",
+      "protocol": "HTTP",
+      "prefix": "curl -X GET 'http://localhost:8080/settings/temp'",
+      "caller": "remote",
+      "buffer-tokens": [
+        {
+          "name": "getTemp",
+          "description": "Obtine temperatura frigiderului",
+          "token-type": "string",
+          "byte-size": 4,
+          "regex-rule": "",
+          "optional": "false"
+        }
+      ]
+    },
+    "2": {
+      "token-delimitators": "",
+      "protocol": "HTTP",
+      "prefix": "curl -X GET 'http://localhost:8080/items/'",
+      "caller": "remote",
+      "buffer-tokens": [
+        {
+          "name": "getItem",
+          "description": "Obtine un produs din frigider cu numele specificat",
+          "token-type": "string",
+          "byte-size": 256,
+          "regex-rule": "[a-zA-Z]*",
+          "optional": "false"
+        }
+      ]
+    },
+    "3": {
+      "token-delimitators": "",
+      "protocol": "HTTP",
+      "prefix": "curl -X GET 'http://localhost:8080/items/expired'",
+      "caller": "remote",
+      "buffer-tokens": [
+        {
+          "name": "getExpired",
+          "description": "Obtine numele produselor care au expirat",
+          "token-type": "string",
+          "byte-size": 256,
+          "regex-rule": "",
+          "optional": "false"
+        }
+      ]
+    },
+    "4": {
+      "token-delimitators": "",
+      "protocol": "HTTP",
+      "prefix": "curl -X GET 'http://localhost:8080/items/getAll'",
+      "caller": "remote",
+      "buffer-tokens": [
+        {
+          "name": "getItems",
+          "description": "Intoarce toate numele produselor din frigider",
+          "token-type": "string",
+          "byte-size": 256,
+          "regex-rule": "",
+          "optional": "false"
+        }
+      ]
+    },
+    "5": {
+      "token-delimitators": "",
+      "protocol": "HTTP",
+      "prefix": "curl -X GET 'http://localhost:8080/totalCalories'",
+      "caller": "remote",
+      "buffer-tokens": [
+        {
+          "name": "getTotalCalories",
+          "description": "calculeaza numarul de calorii al cantitatii de produse care nu au expirat",
+          "token-type": "number",
+          "byte-size": 4,
+          "regex-rule": "",
+          "optional": "false"
+        }
+      ]
+    },
+    "6": {
+      "token-delimitators": "",
+      "protocol": "HTTP",
+      "prefix": "curl -X GET 'http://localhost:8080/getAudit'",
+      "caller": "remote",
+      "buffer-tokens": [
+        {
+          "name": "getAudit",
+          "description": "Scrie intr-un fisier toate cererile facute, plus intoarce si un json cu cererile din fisier",
+          "token-type": "number",
+          "byte-size": 4,
+          "regex-rule": "",
+          "optional": "false"
+        }
+      ]
+    }
+  }
 }
-
-
-
-
