@@ -205,9 +205,16 @@ void EndpointClass::removeItem(const Rest::Request& request, Http::ResponseWrite
     Json::Value root = json.parseString(request.body());
 
     std::string value = root["name"].asString();
-    fridge.removeItemByName(value);
+    if (fridge.removeItemByName(value))
+    {
+        response.send(Http::Code::Ok, "Item removed");
+    }
+    else
+    {
+        response.send(Http::Code::Ok, "Item does not exist");   
+    }
 
-    response.send(Http::Code::Ok, "Item removed");
+    
 }
 
 /* functia primeste un json cu un item si modifica caloriile si cantitatea de produs daca exista */
