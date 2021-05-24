@@ -175,6 +175,22 @@
           "optional": "false"
         }
       ]
+    },
+    "7": {
+      "token-delimitators": "",
+      "protocol": "MQTT",
+      "prefix": "mosquitto_sub -h test.mosquitto.org -t 'fridgeHub/temperature",
+      "caller": "remote",
+      "buffer-tokens": [
+        {
+          "name": "temp",
+          "description": "Temperatura cu mqtt",
+          "token-type": "number",
+          "byte-size": 4,
+          "regex-rule": "",
+          "optional": "false"
+        }
+      ]
     }
   }
 }
