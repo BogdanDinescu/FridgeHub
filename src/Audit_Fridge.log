@@ -25,3 +25,20 @@ Get specific item 21:23:48
 Get specific item 21:23:49
 Get specific item 21:23:56
 Get specific item 21:23:56
+Set temperature 12:5:48
+Set temperature 12:5:52
+Set temperature 12:5:58
+Get temperature 12:6:6
+Get items 12:6:22
+Add item 12:6:53
+Get items 12:6:57
+Get specific item 12:7:25
+Remove item 12:7:55
+Remove item 12:7:59
+Remove item 12:8:22
+Get items 12:8:26
+Get calories for specific product 12:10:1
+Get expired items 12:10:39
+Get specific item 12:10:53
+Set temperature 12:12:45
+Set temperature 12:12:50
